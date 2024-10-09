@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/08 23:35:22 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/09 11:50:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,56 @@ void	update_unit_test_result(const int test_result)
 	global_result = !test_result;
 }
 
-int main(void)
+t_test	get_test_type(int ac, char **av)
 {
-	// test_strlen();
-	test_strcpy();
+	if (ac < 2)
+		return (ALL);
+	if (!strcmp(av[1], "strlen") || !strcmp(av[1], "ft_strlen"))
+		return (STRLEN);
+	if (!strcmp(av[1], "strcpy") || !strcmp(av[1], "ft_strcpy"))
+		return (STRCPY);
+	if (!strcmp(av[1], "mandatory"))
+		return (MANDATORY);
+	if (!strcmp(av[1], "bonus"))
+		return (BONUS);
+	return (UNKNOWN);
+}
+
+int main(int ac, char **av)
+{
+	/* TODO Implement Usage message */
+	t_test test = get_test_type(ac, av);
+	t_test_function test_functions[TOT_FUNCTIONS] = {
+		test_strlen,
+		test_strcpy,
+	};
+	
+	switch (test)
+	{
+	case STRLEN:
+		test_strlen();
+		break;
+	case STRCPY:
+		test_strcpy();
+		break;
+	case MANDATORY:
+		for (size_t i = 0; i < MANDATORY; i++)
+			test_functions[i]();
+		break;
+	// case BONUS:
+	// 	for (size_t i = MANDATORY + 1; i < BONUS; i++)
+	// 		test_functions[i]();
+	case ALL:
+		for (size_t i = 0; i < TOT_FUNCTIONS; i++)
+			test_functions[i]();
+		break;
+	default:
+		printf(RED "Unknown test\n" RESET);
+		exit (1);
+	}
+	printf(BLUE "\n\n********************************\n" RESET);
+	printf(BLUE "Unit tests global result: " RESET);
+	print_unit_test_result();
+	printf(BLUE "********************************\n" RESET);
+	return (global_result);
 }

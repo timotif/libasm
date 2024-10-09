@@ -6,12 +6,13 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 22:56:00 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/09 00:03:25 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/09 11:48:43 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Colors
 RED = \033[0;31m
+YELLOW = \033[0;33m
 GREEN = \033[0;32m
 BLUE = \033[0;34m
 NC = \033[0m
@@ -28,6 +29,15 @@ LIB_DIR = ../
 LIB = libasm.a
 RM = rm -rf
 MAKE = make -s
+
+help:
+	@printf "$(YELLOW)Usage: make [test | debug | profile | re | clean | fclean]\n$(NC)"
+	@printf "$(BLUE)\ttest: $(NC)Compile the project\n"
+	@printf "$(BLUE)\tdebug: $(NC)Compile the project with debug message and flags\n"
+	@printf "$(BLUE)\tprofile: $(NC)Compile the project with time profiling messages\n"
+	@printf "$(BLUE)\tre: $(NC)Recompile the project\n"
+	@printf "$(BLUE)\tclean: $(NC)Remove object files\n"
+	@printf "$(BLUE)\tfclean: $(NC)Remove object files and executable\n"
 
 all: $(NAME)
 
