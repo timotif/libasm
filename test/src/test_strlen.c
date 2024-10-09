@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 20:48:13 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/08 23:32:07 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/09 12:22:06 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	test(const char *s)
 	ret = strlen(s) == ft_strlen(s);
 	#endif
 	#ifdef DEBUG
-	printf("%s: %ld - %ld -> ret: %d\n", s, strlen(s), ft_strlen(s), ret);
+	printf("%.1000s: %ld - %ld -> ret: %d\n", s, strlen(s), ft_strlen(s), ret);
 	#endif
 	printf("%s" RESET, (ret) ? GREEN "OK\n" : RED "KO\n");
 	update_unit_test_result(ret);

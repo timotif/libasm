@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/09 11:50:26 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/09 12:24:20 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	print_unit_test_result(void)
 void	update_unit_test_result(const int test_result)
 {
 	#ifdef DEBUG
-	printf("global_result: %d test_result: %d\n", global_result, test_result);
+	printf("global_result: %d test_result: %d\n", global_result, !test_result);
 	#endif
 	if (global_result)
 		return ;
