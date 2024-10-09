@@ -5,26 +5,24 @@ section .text
 ft_strcmp:
 	; s1: rdi -  s2: rsi
 	xor rbx, rbx ; init counter
-	xor rax, rax ; init return register
 
 _loop:
 	mov cl, [rdi + rbx] ; cl = s1[rbx]
 	mov dl, [rsi + rbx] ; dl = s2[rbx]
-	cmp cl, 0 ; check if s1 is over
-	jz _return
-	cmp dl, 0 ; check if s2 is over
-	jz _return
-	mov al, cl
-	sub al, dl
-	cmp al, 0
+	test cl, cl ; check if s1 is over
+	jz _end
+	test dl, dl ; check if s2 is over
+	jz _end
+	sub cl, dl
 	jne _return
 	inc rbx
 	jmp _loop
 
+_end:
+	sub cl, dl ; update return value if a string is over
+
 _return:
-	mov al, cl
-	sub al, dl
-	movsx rax, al ; sign-extend al to rax
+	movsx rax, cl ; sign-extend al to rax
 	ret
 
 section .note.GNU-stack
