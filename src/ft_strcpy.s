@@ -13,10 +13,11 @@ ft_strcpy:
 _loop:
     mov cl, [rsi + rax]  ; load the byte from src into cl
     mov [rbx + rax], cl  ; store the byte into dst
-	dec rax ; decrease at the beginning of the loop 
-	; sub rax, 4 ; decrease counter
-	cmp rax, -1 ; compare to -1 because at 0 we still want to copy the last byte
-	jge _loop
+	cmp rax, 0 ; compare to 0
+	je _return
+	dec rax ; decrease after the check to avoid rax to ever go negative (invalid read)
+	jmp _loop
+_return:
 	mov rax, rbx ; return the dst
 	ret
 

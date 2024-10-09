@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 23:20:58 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/09 12:32:10 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/09 21:46:27 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,14 @@ static void	test(char *dst, const char *src)
 
 void	test_strcpy()
 {
+	int max_len = 4096;
+	char *src;
+	
 	printf(BLUE "*** STRCPY vs. FT_STRCPY ***\n" RESET);
 	#ifdef DEBUG
 	printf("DEBUG MODE: ON\n");
 	#endif
-	char dst[100];
+	char dst[max_len];
 	test(dst, "Hello world");
 	test(dst, "42");
 	test(dst, "a"); // Single character
@@ -67,5 +70,16 @@ void	test_strcpy()
 	test(dst, "                       "); // White spaces
 	test(dst, "!@#$%^&*()");  // Special characters
     test(dst, "こんにちは");  // Multibyte characters
+	test(dst, "Hello\0World"); // Null character in the middle
+    test(dst, "   Leading spaces"); // Leading spaces
+    test(dst, "Trailing spaces   "); // Trailing spaces
+    test(dst, "Line1\nLine2\nLine3"); // Newline characters
+    test(dst, "Tab\tSeparated\tValues"); // Tab characters
+	src = create_very_long_string(max_len);
+	test(dst, src);
+	free(src);
+	src = create_random_string(max_len);
+	test(dst, src);
+	free(src);
 	print_unit_test_result();
 }

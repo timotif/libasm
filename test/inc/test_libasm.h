@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:31:18 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/09 11:38:57 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/09 21:04:38 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	update_unit_test_result(const int test_result);
 void	print_unit_test_result(void);
 char	*create_very_long_string(size_t size);
 char	*create_random_string(size_t size);
+char	*create_random_printable_string(size_t size);
 
 // Libasm
 size_t	ft_strlen(const char *s);
