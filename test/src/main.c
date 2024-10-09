@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/09 21:04:59 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/09 23:28:19 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ t_test	get_test_type(int ac, char **av)
 		return (STRLEN);
 	if (!strcmp(av[1], "strcpy") || !strcmp(av[1], "ft_strcpy"))
 		return (STRCPY);
+	if (!strcmp(av[1], "strcmp") || !strcmp(av[1], "ft_strcmp"))
+		return (STRCMP);
 	if (!strcmp(av[1], "mandatory"))
 		return (MANDATORY);
 	if (!strcmp(av[1], "bonus"))
@@ -95,6 +97,7 @@ int main(int ac, char **av)
 	t_test_function test_functions[TOT_FUNCTIONS] = {
 		test_strlen,
 		test_strcpy,
+		test_strcmp,
 	};
 	
 	switch (test)
@@ -104,6 +107,9 @@ int main(int ac, char **av)
 		break;
 	case STRCPY:
 		test_strcpy();
+		break;
+	case STRCMP:
+		test_strcmp();
 		break;
 	case MANDATORY:
 		for (size_t i = 0; i < MANDATORY; i++)

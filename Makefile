@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 18:50:50 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/09 21:48:50 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/09 22:24:03 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ test: $(NAME)
 
 # Rule to link .o files to executables	
 $(EXECS): %: $(OBJS_DIR)/%.o
-	@$(LINKER) -lc -o $(notdir $@) $<
+	@$(LINKER) -lc -L. -lasm -o $(notdir $@) $<
 	@echo "$(GREEN)Executable '$(notdir $@)' created$(NC)"
 
 # Clean target to remove object files and the directory

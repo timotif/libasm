@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:31:18 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/09 21:04:38 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/09 22:41:40 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef enum e_test {
 	// Mandatory functions
 	STRLEN,
 	STRCPY,
+	STRCMP,
 	// Boundary
 	MANDATORY,
 	// Bonus functions
@@ -63,9 +64,11 @@ char	*create_random_printable_string(size_t size);
 // Libasm
 size_t	ft_strlen(const char *s);
 char	*ft_strcpy(char *restrict dst, const char *restrict src);
+int		ft_strcmp(const char *s1, const char *s2);
 
 // Test
 void	test_strlen();
 void	test_strcpy();
+void	test_strcmp();
 
 #endif

@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 22:56:00 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/09 11:48:43 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/09 22:27:29 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ NC = \033[0m
 SRCS_DIR = src
 OBJS_DIR = obj
 INCLUDE_DIR = inc
-SRCS = $(addprefix $(SRCS_DIR)/, main.c test_strlen.c test_strcpy.c)
+SRCS = $(wildcard $(SRCS_DIR)/*.c)
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SRCS:.c=.o)))
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
