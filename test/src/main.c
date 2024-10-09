@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/09 12:24:20 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/09 20:34:48 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char *create_very_long_string(size_t size)
 		printf("Memory allocation failed\n");
 		exit (1);
 	}
-	very_long_string[size] = '\0';
+	very_long_string[size - 1] = '\0';
 	memset(very_long_string, '~', size - 1);
 	return (very_long_string);
 }
@@ -35,7 +35,7 @@ char *create_random_string(size_t size)
 		printf("Memory allocation failed\n");
 		exit (1);
 	}
-	random_string[size] = '\0';
+	random_string[size - 1] = '\0';
 	for (size_t i = 0; i < size - 1; i++)
 		random_string[i] = (char)(rand() % 255 + 1);
 	return (random_string);

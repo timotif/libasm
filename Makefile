@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 18:50:50 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/09 00:34:53 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/09 20:21:00 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ $(OBJS_DIR)/%.o:$(SRCS_DIR)/%.s | $(OBJS_DIR)
 exec: $(EXECS)
 
 test: $(NAME)
-	@$(MAKE) -C test
+	@$(MAKE) -C test test
+	./test/test
 
 # Rule to link .o files to executables	
 $(EXECS): %: $(OBJS_DIR)/%.o
