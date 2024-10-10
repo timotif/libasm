@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/10 13:16:58 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/10 16:21:45 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	print_unit_test_result(void)
 void	update_unit_test_result(const int test_result)
 {
 	#ifdef DEBUG
-	printf("global_result: %d test_result: %d\n", global_result, !test_result);
+	// printf("global_result: %d test_result: %d\n", global_result, !test_result);
 	#endif
 	if (global_result)
 		return ;
@@ -83,6 +83,8 @@ t_test	get_test_type(int ac, char **av)
 		return (STRCPY);
 	if (!strcmp(av[1], "strcmp") || !strcmp(av[1], "ft_strcmp"))
 		return (STRCMP);
+	if (!strcmp(av[1], "write") || !strcmp(av[1], "ft_write"))
+		return (WRITE);
 	if (!strcmp(av[1], "mandatory"))
 		return (MANDATORY);
 	if (!strcmp(av[1], "bonus"))
@@ -98,6 +100,7 @@ int main(int ac, char **av)
 		test_strlen,
 		test_strcpy,
 		test_strcmp,
+		test_write,
 	};
 	
 	switch (test)
@@ -114,6 +117,9 @@ int main(int ac, char **av)
 	case MANDATORY:
 		for (size_t i = 0; i < MANDATORY; i++)
 			test_functions[i]();
+		break;
+	case WRITE:
+		test_write();
 		break;
 	// case BONUS:
 	// 	for (size_t i = MANDATORY + 1; i < BONUS; i++)
