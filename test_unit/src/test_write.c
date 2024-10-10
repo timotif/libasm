@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:42:45 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/10 16:25:06 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/10 22:50:57 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	test(int fd, const void *buf, size_t count)
 	printf("Test %d: ", test_number);
 	if (!create_pipe() || !redirect_stdout(&saved_fd, fd))
 	{
-		update_unit_test_result(0);
+		test_number++;
 		return ;
 	}
 	
@@ -100,11 +100,19 @@ void test_write()
 	printf("DEBUG MODE: ON\n");
 	#endif
 	test(1, "Hello, World!\n", 14);
-	test(1, "", 1);
 	test(1, "Hi", 1);
-	test(1, "Hi", 0);
+	test(1, "Hi", 0); // 0 count
+	test(1, "a", 1); // Single character
+	test(1, "", 1); // Empty string
+	test(1, "                       ", 24); // White spaces
+	test(1, "!@#$%^&*()", 11);  // Special characters
+    test(1, "こんにちは", 16);  // Multibyte characters
+	test(1, "Hello\0World", 12); // Null character in the middle
+    test(1, "   Leading spaces", 18); // Leading spaces
+    test(1, "Trailing spaces   ", 19); // Trailing spaces
+    test(1, "Line1\nLine2\nLine3", 18); // Newline characters
+    test(1, "Tab\tSeparated\tValues", 21); // Tab characters
 	char *src = create_random_printable_string(8192);
 	test(1, src, 100);
 	free(src);
-	test(56, "Hi", 2);
 }

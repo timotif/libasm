@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 22:56:00 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/09 22:27:29 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/10 23:12:59 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = test
 LIB_DIR = ../
 LIB = libasm.a
-RM = rm -rf
+RM = rm -r
 MAKE = make -s
 
 help:
@@ -59,17 +59,17 @@ $(LIB_DIR)$(LIB):
 
 $(NAME): $(LIB_DIR)$(LIB) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -L$(LIB_DIR) -lasm -o $(NAME)
+	@cp $(NAME) $(LIB_DIR)
 
 clean:
-	@$(MAKE) -C $(LIB_DIR) clean
 ifneq ($(wildcard $(OBJS)),)
 	@$(RM) $(OBJS_DIR)
 endif
 
 fclean: clean
-	@$(MAKE) -C $(LIB_DIR) fclean
 ifneq ($(wildcard $(NAME)),)
 	@$(RM) $(NAME)
+	@$(RM) $(LIB_DIR)$(NAME)
 endif
 
 re: fclean all
