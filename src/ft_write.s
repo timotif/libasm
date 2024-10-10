@@ -1,7 +1,7 @@
 ; ssize_t write(int fd, const void buf[.count], size_t count);
 section .text
 	global ft_write
-; syscall write: 4
+; syscall write: 1
 ; args: rdi: fd
 ;		rsi: buff
 ;		rdx: count

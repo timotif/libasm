@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/10 22:47:18 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/10 23:21:50 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ t_test	get_test_type(int ac, char **av)
 		return (STRCMP);
 	if (!strcmp(av[1], "write") || !strcmp(av[1], "ft_write"))
 		return (WRITE);
+	if (!strcmp(av[1], "read") || !strcmp(av[1], "ft_read"))
+		return (READ);
 	if (!strcmp(av[1], "mandatory"))
 		return (MANDATORY);
 	if (!strcmp(av[1], "bonus"))
@@ -101,6 +103,7 @@ int main(int ac, char **av)
 		test_strcpy,
 		test_strcmp,
 		test_write,
+		test_read,
 	};
 	
 	switch (test)
@@ -114,12 +117,15 @@ int main(int ac, char **av)
 	case STRCMP:
 		test_strcmp();
 		break;
+	case WRITE:
+		test_write();
+		break;
+	case READ:
+		test_read();
+		break;
 	case MANDATORY:
 		for (size_t i = 0; i < MANDATORY; i++)
 			test_functions[i]();
-		break;
-	case WRITE:
-		test_write();
 		break;
 	// case BONUS:
 	// 	for (size_t i = MANDATORY + 1; i < BONUS; i++)
