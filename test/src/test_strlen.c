@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 20:48:13 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/09 12:22:06 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/10 12:09:37 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,22 @@ static void	test(const char *s)
 {
 	static int	test_number = 1;
 	int	ret;
+	size_t len_std, len_ft;
 	
 	printf("Test %d: ", test_number);
 	#ifdef PROFILE
 	double time_spent_std, time_spent_ft;
-	size_t len_std, len_ft;
 	time_spent_std = time_test(&len_std, strlen, s);
 	time_spent_ft = time_test(&len_ft, ft_strlen, s);
-	ret = len_std == len_ft;
 	printf(" - time: %f/%fms - ", time_spent_std, time_spent_ft);
 	# else
-	ret = strlen(s) == ft_strlen(s);
+	len_std = strlen(s);
+	len_ft = ft_strlen(s);
 	#endif
+	// #if defined(DEBUG) || defined(PROFILE)
+	ret = (len_std == len_ft);
 	#ifdef DEBUG
-	printf("%.1000s: %ld - %ld -> ret: %d\n", s, strlen(s), ft_strlen(s), ret);
+	printf("%.1000s: %ld - %ld -> ret: %d\n", s, len_std, len_ft, ret);
 	#endif
 	printf("%s" RESET, (ret) ? GREEN "OK\n" : RED "KO\n");
 	update_unit_test_result(ret);

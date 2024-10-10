@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/09 23:28:19 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/10 13:16:58 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int main(int ac, char **av)
 		printf(RED "Unknown test\n" RESET);
 		exit (1);
 	}
-	printf(BLUE "\n\n********************************\n" RESET);
+	printf(BLUE "\n********************************\n" RESET);
 	printf(BLUE "Unit tests global result: " RESET);
 	print_unit_test_result();
 	printf(BLUE "********************************\n" RESET);

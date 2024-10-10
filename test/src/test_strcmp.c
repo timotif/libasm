@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 22:32:03 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/09 23:35:12 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/10 13:16:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,5 @@ void test_strcmp()
 	copy_very_long_string[4094] = 'a';
 	test(very_long_string, copy_very_long_string);
 	free(very_long_string);
+	print_unit_test_result();
 }
