@@ -6,13 +6,27 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/10 23:21:50 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/11 12:34:19 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <test_libasm.h>
 
 int global_result = 0;
+char *g_base_test_strings[] = {
+	"Hello world",
+	"42",
+	"a", // Single charact
+	"", // Empty string
+	"!@#$%^&*()",  // Special chars
+	"こんにちは",  // Multibyte
+	"Hello\0World", // Null char in the middle
+	"   Leading spaces", 
+	"Trailing spaces   ", 
+	"Line1\nLine2\nLine3",
+	"Tab\tSeparated\tValues",
+	NULL
+};
 
 char *create_very_long_string(size_t size)
 {

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 22:32:03 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/10 22:47:20 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/11 12:39:19 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void test_strcmp()
 	#ifdef DEBUG
 	printf("DEBUG MODE: ON\n");
 	#endif
+	// Base tests
 	test("Hello world", "Hello world");
 	test("Hello world", "Hello world!");
 	test("Hello world!", "Hello world");
@@ -73,6 +74,7 @@ void test_strcmp()
 	test("", "Hello world");
 	test("42", "43");
 	test("43", "42");
+	// Extra tests
 	char *very_long_string = create_very_long_string(4096);
 	char copy_very_long_string[4096];
 	ft_strcpy(copy_very_long_string, very_long_string);

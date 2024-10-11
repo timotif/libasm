@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 23:20:58 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/10 22:47:28 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/11 12:39:53 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,10 @@ void	test_strcpy()
 	printf("DEBUG MODE: ON\n");
 	#endif
 	char dst[max_len];
-	test(dst, "Hello world");
-	test(dst, "42");
-	test(dst, "a"); // Single character
-	test(dst, ""); // Empty string
-	test(dst, "                       "); // White spaces
-	test(dst, "!@#$%^&*()");  // Special characters
-    test(dst, "こんにちは");  // Multibyte characters
-	test(dst, "Hello\0World"); // Null character in the middle
-    test(dst, "   Leading spaces"); // Leading spaces
-    test(dst, "Trailing spaces   "); // Trailing spaces
-    test(dst, "Line1\nLine2\nLine3"); // Newline characters
-    test(dst, "Tab\tSeparated\tValues"); // Tab characters
+	// Base tests
+	for (int i = 0; g_base_test_strings[i]; i++)
+		test(dst, g_base_test_strings[i]);
+	// Extra tests
 	src = create_very_long_string(max_len);
 	test(dst, src);
 	free(src);

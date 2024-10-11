@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 18:50:50 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/10 23:12:01 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/11 11:59:51 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,7 @@ run_test: test	# Run the test unit
 
 # Rule to link .o files to executables	
 $(EXECS): %: $(OBJS_DIR)/%.o
-	@$(LINKER) -lc -L. -lasm -o $(notdir $@) $<
+	@$(LINKER) -fPIE -pie -lc -L. -lasm -o $(notdir $@) $<
 	@echo "$(GREEN)Executable '$(notdir $@)' created$(NC)"
 
 clean:	# Remove object files from the library and the test unit

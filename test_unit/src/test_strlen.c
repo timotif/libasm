@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 20:48:13 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/10 12:09:37 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/11 12:37:28 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,10 @@ void	test_strlen()
 	#ifdef DEBUG
 	printf("DEBUG MODE: ON\n");
 	#endif
-	test("Hello world");
-	test("42");
-	test("a"); // Single character
-	test(""); // Empty string
-	test("                       "); // White spaces
-	test("!@#$%^&*()");  // Special characters
-    test("こんにちは");  // Multibyte characters
+	// Base tests
+	for (int i = 0; g_base_test_strings[i]; i++)
+		test(g_base_test_strings[i]);
+	// Extra tests
 	char *very_long_string = create_very_long_string((size_t)INT_MAX + 100);
 	test(very_long_string); // String longer than INT_MAX
 	free(very_long_string);

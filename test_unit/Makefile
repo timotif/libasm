@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 22:56:00 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/10 23:12:59 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/11 12:21:56 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ INCLUDE_DIR = inc
 SRCS = $(wildcard $(SRCS_DIR)/*.c)
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SRCS:.c=.o)))
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR)
 NAME = test
 LIB_DIR = ../
 LIB = libasm.a
@@ -52,13 +52,13 @@ $(OBJS_DIR):
 
 $(OBJS_DIR)/%.o:$(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@echo "$(BLUE)Compiling $(notdir $<)$(NC)"
-	@$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIB_DIR)$(LIB):
 	@$(MAKE) -C $(LIB_DIR)
 
 $(NAME): $(LIB_DIR)$(LIB) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -L$(LIB_DIR) -lasm -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIB_DIR) -lasm 
 	@cp $(NAME) $(LIB_DIR)
 
 clean:

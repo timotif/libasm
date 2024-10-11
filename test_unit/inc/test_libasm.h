@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:31:18 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/10 23:57:44 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/11 12:35:29 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <errno.h>
 # include <sys/types.h>
 # include <fcntl.h>
 # include <limits.h>
@@ -24,6 +25,7 @@
 
 /*** GLOBAL VARIABLE ***/
 extern int global_result;
+extern char *g_base_test_strings[];
 /***********************/
 
 /**
