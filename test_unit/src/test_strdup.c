@@ -6,35 +6,25 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 23:20:58 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/11 14:54:24 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/11 15:28:59 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <test_libasm.h>
 
 #ifdef PROFILE
-static double time_test(char * (*f)(char *restrict,const char *restrict), char *dst, const char *src)
+static double time_test(char * (*f)(const char *), char **dst, const char *src)
 {
 	clock_t start, end;
 	double time_spent;
 	
 	start = clock();
-	dst = f(dst, src);
+	*dst = f(src);
 	end = clock();
 	time_spent = (double)(end - start) / CLOCKS_PER_SEC * 1000;
 	return (time_spent);
 }
 #endif
-
-// static void catch_segv(char *str, int *flag)
-// {
-// 	if (str == NULL)
-// 	{
-// 		*flag = 1;
-// 		str = strdup("NULL");
-// 	}
-		
-// }
 
 static void	test(const char *src)
 {
@@ -44,21 +34,21 @@ static void	test(const char *src)
 	
 	printf("Test %d: ", test_number);
 	#ifdef PROFILE
-	// double time_spent_std, time_spent_ft;
-	// time_spent_std = time_test(strdup, dst, src);
-	// bzero(dst, strlen(dst));
-	// dst_ft = dst;
-	// time_spent_ft = time_test(ft_strdup, dst_ft, src);
-	// printf(" - time: %f/%fms - ", time_spent_std, time_spent_ft);
+	double time_spent_std, time_spent_ft;
+	char *dst_std;
+	time_spent_std = time_test(strdup, &dst_std, src);
+	time_spent_ft = time_test(ft_strdup, &dst_ft, src);
+	printf(" - time: %f/%fms - ", time_spent_std, time_spent_ft);
+	free(dst_std);
 	# else
 	dst_ft = ft_strdup(src);
+	#endif
 	if (!dst_ft)
 	{
 		printf(RED "Malloc failed\n" RESET);
 		test_number++;
 		return ;
 	}
-	#endif
 	#ifdef DEBUG
 	printf("Input: %.1000s - Output: %.1000s\n", (src) ? src: "NULL", (dst_ft) ? dst_ft : "NULL");
 	#endif
@@ -71,7 +61,7 @@ static void	test(const char *src)
 
 void	test_strdup()
 {
-	int max_len = 4096;
+	int max_len = 4096000;
 	char *src;
 	
 	printf(BLUE "*** STRDUP vs. FT_STRDUP ***\n" RESET);
