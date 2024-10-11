@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:31:18 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/11 12:35:29 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/11 14:19:08 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef enum e_test {
 	STRCMP,
 	WRITE,
 	READ,
+	STRDUP,
 	// Boundary
 	MANDATORY,
 	// Bonus functions
@@ -74,6 +75,7 @@ char	*ft_strcpy(char *restrict dst, const char *restrict src);
 int		ft_strcmp(const char *s1, const char *s2);
 ssize_t	ft_write(int fd, const void *buf, size_t count);
 ssize_t	ft_read(int fd, void *buf, size_t count);
+char	*ft_strdup(const char *s);
 
 // Test
 void	test_strlen();
@@ -81,5 +83,6 @@ void	test_strcpy();
 void	test_strcmp();
 void	test_write();
 void	test_read();
+void	test_strdup();
 
 #endif

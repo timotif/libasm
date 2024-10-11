@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/11 12:34:19 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/11 14:28:38 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ t_test	get_test_type(int ac, char **av)
 		return (WRITE);
 	if (!strcmp(av[1], "read") || !strcmp(av[1], "ft_read"))
 		return (READ);
+	if (!strcmp(av[1], "strdup") || !strcmp(av[1], "ft_strdup"))
+		return (STRDUP);
 	if (!strcmp(av[1], "mandatory"))
 		return (MANDATORY);
 	if (!strcmp(av[1], "bonus"))
@@ -118,6 +120,7 @@ int main(int ac, char **av)
 		test_strcmp,
 		test_write,
 		test_read,
+		test_strdup
 	};
 	
 	switch (test)
@@ -136,6 +139,9 @@ int main(int ac, char **av)
 		break;
 	case READ:
 		test_read();
+		break;
+	case STRDUP:
+		test_strdup();
 		break;
 	case MANDATORY:
 		for (size_t i = 0; i < MANDATORY; i++)
