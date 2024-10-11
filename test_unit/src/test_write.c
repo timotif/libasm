@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:42:45 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/11 12:57:05 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/11 15:47:06 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static int redirect_stdout(int *saved_fd, int fd)
 		#ifdef DEBUG
 		printf(RED "Dup failed\n" RESET);
 		#endif
+		close(pipe_fd[0]);
+        close(pipe_fd[1]);
 		return(0);
 	}
 	int ret = dup2(pipe_fd[1], fd);	
@@ -107,6 +109,8 @@ static void	test(int fd, const void *buf, size_t count)
 			return ;
 		printf(RED "Malloc failed\n" RESET);
 		test_number++;
+		close(pipe_fd[0]);
+		close(saved_fd);
 		return ;
 	}
 	// Test functions
