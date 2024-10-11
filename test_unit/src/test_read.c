@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:42:45 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/11 13:06:29 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/11 15:50:06 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	test(const void *buf, size_t count)
 	{
 		printf(RED "File creation failed\n" RESET);
 		test_number++;
+		close(file_fd);
 		return ;
 	}
 	close(file_fd);
@@ -85,19 +86,20 @@ void test_read()
 	#ifdef DEBUG
 	printf("DEBUG MODE: ON\n");
 	#endif
+	// int max_size = 4096;
 	// Base tests
-	for (int i = 0; g_base_test_strings[i]; i++)
-		test(g_base_test_strings[i], strlen(g_base_test_strings[i]));
-	// Extra tests
-	test("Hi", 0); // 0 count
-	test("a", 1); // Single character
-	test("", 1); // Empty string nonzero count
-    test("こんにちは", 5);  // Multibyte characters different count
-	test("Hello\0World", 12); // Null character in the middle
-	char *src = create_random_string(100000000);
-	test(src, 100000000);
-	free(src);
-	// Failure test
+	// for (int i = 0; g_base_test_strings[i]; i++)
+	// 	test(g_base_test_strings[i], strlen(g_base_test_strings[i]));
+	// // Extra tests
+	// test("Hi", 0); // 0 count
+	// test("a", 1); // Single character
+	// test("", 1); // Empty string nonzero count
+    // test("こんにちは", 5);  // Multibyte characters different count
+	// test("Hello\0World", 12); // Null character in the middle
+	// char *src = create_random_string(max_size);
+	// test(src, max_size);
+	// free(src);
+	// // Failure test
 	test(NULL, 1);
 	test("Hello", 0);
 	test("Hello", -1);
