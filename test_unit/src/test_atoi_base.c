@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 19:42:03 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/13 01:14:16 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:22:55 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,20 @@ int ft_atoi_base_c(char *str, char *base) {
 	return (ret * sign);
 }
 
+#ifdef PROFILE
+static double time_test(int (*f)(char *, char *), int *ret, char *str, char *base)
+{
+	clock_t start, end;
+	double time_spent;
+	
+	start = clock();
+	*ret = f(str, base);
+	end = clock();
+	time_spent = (double)(end - start) / CLOCKS_PER_SEC * 1000;
+	return (time_spent);
+}
+#endif
+
 static void	test(char *str, char *base)
 {
 	static int	test_number = 1;
@@ -83,12 +97,10 @@ static void	test(char *str, char *base)
 	
 	printf("Test %d: ", test_number);
 	#ifdef PROFILE
-	// double time_spent_std, time_spent_ft;
-	// char *dst_std;
-	// time_spent_std = time_test(strdup, &dst_std, src);
-	// time_spent_ft = time_test(ft_atoi_base, &dst_ft, src);
-	// printf(" - time: %f/%fms - ", time_spent_std, time_spent_ft);
-	// free(dst_std);
+	double time_spent_c, time_spent_asm;
+	time_spent_c = time_test(ft_atoi_base_c, &ret_c, str, base);
+	time_spent_asm = time_test(ft_atoi_base, &ret_asm, str, base);
+	printf(" - time: %f/%fms - ", time_spent_c, time_spent_asm);
 	# else
 	ret_c = ft_atoi_base_c(str, base);
 	ret_asm = ft_atoi_base(str, base);
