@@ -1,11 +1,13 @@
-; ssize_t write(int fd, const void buf[.count], size_t count);
+; ssize_t write(int fd, const void buf[.count], size_t count)
+;	fd				-> rdi
+;	buff			-> rsi
+;	count			-> rdx
+;	syscall write	-> 1
+
 section .text
 	global ft_write
 	extern __errno_location
-; syscall write: 1
-; args: rdi: fd
-;		rsi: buff
-;		rdx: count
+
 ft_write:
 	mov rax, 1
 	syscall

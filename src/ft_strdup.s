@@ -1,3 +1,6 @@
+; char *strdup(const char *s)
+;	s	-> rsi
+
 section .text
 	global ft_strdup
 	extern ft_strlen

@@ -1,3 +1,7 @@
+; char *stpcpy(char *restrict dst, const char *restrict src);
+;	dst		-> rdi
+;	src		-> rsi
+
 section .text
 	global ft_strcpy
 	extern ft_strlen

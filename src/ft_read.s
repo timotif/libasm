@@ -1,11 +1,13 @@
-; ssize_t read(int fd, void buf[.count], size_t count);
+; ssize_t read(int fd, void buf[.count], size_t count)
+;	fd				-> rdi
+;	buff			-> rsi
+;	count			-> rdx
+;	syscall read	-> 0
+
 section .text
 	global ft_read
 	extern __errno_location
-; syscall read: 0
-; args: rdi: fd
-;		rsi: buff
-;		rdx: count
+
 ft_read:
 	mov rax, 0
 	syscall

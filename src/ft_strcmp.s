@@ -1,4 +1,7 @@
 ; int strcmp(const char *s1, const char *s2);
+;	s1	-> rdi
+;	s2	-> rsi
+
 section .text
 	global ft_strcmp
 
