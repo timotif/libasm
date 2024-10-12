@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/11 14:28:38 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:07:55 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char *create_very_long_string(size_t size)
 
 char *create_random_string(size_t size)
 {
+	srand(time(NULL));
 	char *random_string = malloc(size);
 	if (!random_string)
 	{
@@ -57,6 +58,7 @@ char *create_random_string(size_t size)
 
 char *create_random_printable_string(size_t size)
 {
+	srand(time(NULL));
 	char *random_string = malloc(size);
 	if (!random_string)
 	{
@@ -105,6 +107,8 @@ t_test	get_test_type(int ac, char **av)
 		return (STRDUP);
 	if (!strcmp(av[1], "mandatory"))
 		return (MANDATORY);
+	if (!strcmp(av[1], "atoi_base") || !strcmp(av[1], "ft_atoi_base"))
+		return (ATOI_BASE);
 	if (!strcmp(av[1], "bonus"))
 		return (BONUS);
 	return (UNKNOWN);
@@ -120,7 +124,8 @@ int main(int ac, char **av)
 		test_strcmp,
 		test_write,
 		test_read,
-		test_strdup
+		test_strdup,
+		test_atoi_base,
 	};
 	
 	switch (test)
@@ -147,9 +152,13 @@ int main(int ac, char **av)
 		for (size_t i = 0; i < MANDATORY; i++)
 			test_functions[i]();
 		break;
-	// case BONUS:
-	// 	for (size_t i = MANDATORY + 1; i < BONUS; i++)
-	// 		test_functions[i]();
+	case ATOI_BASE:
+		test_atoi_base();
+		break;
+	case BONUS:
+		for (size_t i = MANDATORY; i < BONUS - 1; i++)
+			test_functions[i]();
+		break;
 	case ALL:
 		for (size_t i = 0; i < TOT_FUNCTIONS; i++)
 			test_functions[i]();

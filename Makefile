@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 18:50:50 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/11 11:59:51 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/12 20:23:07 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,12 @@ NC = \033[0m
 NAME = libasm.a
 
 SRCS = $(wildcard $(SRCS_DIR)/*.s)
+BONUS_SRCS = $(wildcard $(BONUS_DIR)/*.s)
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SRCS:.s=.o)))
+BONUS_OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(BONUS_SRCS:.s=.o)))
 EXECS = $(notdir $(OBJS:.o=)) # Remove the .o extension
 SRCS_DIR = src
+BONUS_DIR = bonus
 OBJS_DIR = obj
 TEST_DIR = test_unit
 
@@ -36,7 +39,7 @@ LINKER = ld -g
 RM = rm -rf 
 MAKE = make -s
 
-all: $(NAME) test	# Default target to compile the library and the test unit
+all: bonus test	# Default target to compile the library and the test unit
 
 help:	# Display this helpful message
 # Automatically generating the help taking the rules from the Makefile with awk
@@ -52,6 +55,10 @@ $(NAME): $(OBJS)	# Create the library
 	@$(AR) $(AR_FLAGS) $(NAME) $(OBJS)
 	@echo "$(GREEN)Library '$(NAME)' created$(NC)"
 
+bonus: $(OBJS) $(BONUS_OBJS)	# Compile the bonus functions
+	@$(AR) $(AR_FLAGS) $(NAME) $(OBJS) $(BONUS_OBJS)
+	@echo "$(GREEN)Bonus functions added to the library$(NC)"
+
 # create the object files directory
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
@@ -61,16 +68,21 @@ $(OBJS_DIR)/%.o:$(SRCS_DIR)/%.s | $(OBJS_DIR)
 	@$(ASMC) $(ASM_FLAGS) $< -o $@
 	@echo "$(BLUE)Compiling $(notdir $<)$(NC)"
 
+# Rule to compile bonus .s files to .o files
+$(OBJS_DIR)/%.o: $(BONUS_DIR)/%.s | $(OBJS_DIR)
+	@$(ASMC) $(ASM_FLAGS) $< -o $@
+	@echo "$(MAGENTA)Compiling bonus $(notdir $<)$(NC)"
+
 # Rule to create the executable
 exec: $(EXECS)
 
-test: $(NAME)	# Compile the test unit
+test: bonus	# Compile the test unit
 	@$(MAKE) -C $(TEST_DIR) test
 
-test_debug: $(NAME)	# Compile the test unit in debug mode
+test_debug: bonus	# Compile the test unit in debug mode
 	@$(MAKE) -C $(TEST_DIR) debug
 
-test_profile: $(NAME)	# Compile the test unit with profiling
+test_profile: bonus	# Compile the test unit with profiling
 	@$(MAKE) -C $(TEST_DIR) profile
 
 test_help:	# Display the help message of the test unit
@@ -100,4 +112,5 @@ endif
 
 re: fclean all test	# Recompile the library and the test unit
 
-.PHONY: all clean fclean exec re test test_debug test_profile test_help run_test help
+.PHONY: all clean fclean exec re test test_debug test_profile test_help \
+		run_test help bonus

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 20:48:13 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/11 12:37:28 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:13:31 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ static void	test(const char *s)
 
 void	test_strlen()
 {
+	printf(MAGENTA "*********************************\n");
+	printf(MAGENTA "*           MANDATORY           *\n");
+	printf(MAGENTA "*********************************\n\n" RESET);
 	printf(BLUE "*** STRLEN vs. FT_STRLEN ***\n" RESET);
 	#ifdef DEBUG
 	printf("DEBUG MODE: ON\n");

@@ -21,79 +21,162 @@ section .text
 	global ft_atoi_base
 	extern ft_strlen
 
+%macro invalid_base 1
+cmp byte %1, ' '
+je base_invalid
+cmp byte %1, 9
+je base_invalid
+cmp byte %1, 10
+je base_invalid
+cmp byte %1, 11
+je base_invalid
+cmp byte %1, 12
+je base_invalid
+cmp byte %1, 13
+je base_invalid
+cmp byte %1, '+'
+je base_invalid
+cmp byte %1, '-'
+je base_invalid
+%endmacro
+
 ft_atoi_base:
-	mov r10, rdi	; r10: str
-	mov rdi, rsi	; rdi: base
-	call ft_strlen	; rax: base_len
-	mov r12, rax	; r12: base_len
-	mov r11, rdi	; r11: base
-base_validation:
-	cmp rax, 2
-	jl error
-	call ft_find_duplicates
-	cmp rax, 1
+safety_check:
+	cmp rdi, 0					; if !str
 	je error
+	cmp rsi, 0					; if !base
+	je error					; return 0
+	mov r10, rdi				; r10: str
+	mov r11, rsi				; r11: base
+
+	mov rdi, rsi				; set arg for ft_strlen
+	call ft_strlen				; rax: base_len
+	mov r12, rax				; r12: base_len
+base_validation:
+	cmp rax, 2					; if base_len < 2
+	jl error
+	call validate_base			; if !validate_base
+	cmp rax, 1
+	je error					; return error
 init:
-	xor rax, rax	; init result to 0
-	mov rbx, -1		; init str counter
-loop_str:			; outer loop
-	inc rbx
-	cmp byte [r10 + rbx], 0
-	je return
-	mov rcx, -1		; init base counter
-	mov r13b, [r10 + rbx]
-loop_base:			; inner loop
-	inc rcx
-	cmp byte [r11, rcx], 0
-	je update_result
-	cmp byte [r11 + rcx], r13b
-	je update_result
+	mov rbx, -1					; init str counter
+	mov rdi, r10				; rdi: str
+ skip_spaces:
+ 	inc rbx	
+ 	call ft_isspace
+ 	cmp rax, 1
+ 	je skip_spaces
+ init_sign_reg:
+ 	xor r8, r8					; init r8: sign register
+ handle_sign:
+ 	call handle_sign_func
+ 	cmp rax, -1					; if not sign
+ 	je init_return_value		; break
+ 	inc rbx
+ 	add r8, rax					; add 1 if -, 0 if + 
+ 	jmp handle_sign
+init_return_value:
+	xor rax, rax				
+loop_str:						; outer loop
+	cmp byte [r10 + rbx], 0	
+	je check_negative	
+	mov rcx, -1					; init base counter
+	mov r13b, [r10 + rbx]		; str[rbx]
+loop_base:							; inner loop
+	inc rcx	
+	cmp byte [r11, rcx], 0			; if !base[rcx]
+	je update_result				
+	cmp byte [r11 + rcx], r13b		; or base[rcx] == str[rbx]
+	je update_result				; goto update result
 	jmp loop_base
 update_result:
-	cmp rcx, r12
-	jge error
-	mul r12
-	add rax, rcx
+	cmp rcx, r12				; if rcx (base_idx) >= base_len
+	jge check_negative			; end of base -> check the sign to return
+	mul r12						; base_idx * return_val
+	add rax, rcx				; return_val += base_idx
+	inc rbx						; rbx++
 	jmp loop_str
 error:
 	mov rax, 0
+	ret
+check_negative:
+	test r8, r8					; if r8
+	jp return					; is even -> return
+	neg rax						; return_val = -return_val
+	ret
 return:
 	ret
 
-; int ft_find_duplicates(char *base)
+; int validate_base(char *base)
 ; 	rdi		-> base
-; 	returns 	0 if no duplicates
+; 	returns ->	0 if no duplicates
 ;				1 if duplicates
-ft_find_duplicates:
+validate_base:
 	; init bitmap
-	mov rcx, 4				; num of bytes
-	lea rsi, [rel bitmap]		; move bitmap address to rsi
-	xor rax, rax			; rax = 0
-	rep mov dword [rsi + rcx], 0				; repeat storing al into [rdi] rcx times
-	xor rcx, rcx			; init counter
-check_dup_loop:	
-	mov al, [rdi + rcx]		; load current char
-	test al, al				; check if it reached the end
-	jz no_duplicates	
-	movzx rbx, al			; zero extend	
-	shr rbx, 3				; find byte index by dividing by 8
-	and al, 7				; find bit inside the byte
+	mov rcx, 32						; num of bytes
+	lea rsi, [rel bitmap]			; move bitmap address to rsi
+init_bitmap_loop:
+	mov byte [rsi + rcx], 0			; 
+	loop init_bitmap_loop
+	
+	xor rax, rax					; rax = 0
+check_dup_loop:			
+	mov al, [rdi + rcx]				; load current char
+	test al, al						; check if it reached the end
+	jz base_valid			
+	invalid_base [rdi + rcx]
+continue_base_loop:
+	movzx rbx, al					; zero extend	
+	shr rbx, 3						; find byte index by dividing by 8
+	and al, 7						; find bit inside the byte
 	movzx rdx, al
 	; Check bitmap
-	bt [rsi + rbx], rdx	; [bitmap + rbx] = byte, al = bit
-	jc found_duplicate
+	bt [rsi + rbx], rdx				; [bitmap + rbx] = byte, al = bit
+	jc base_invalid
 	
 	; Set the bit in the bitmap
 	bts [rsi + rbx], rdx
 
 	inc rcx
 	jmp check_dup_loop
-
-found_duplicate:
+base_invalid:
 	mov rax, 1
 	ret
-no_duplicates:
+base_valid:
 	mov rax, 0
+	ret
+
+; returns	->	0 not space
+;				1 is space
+ft_isspace:
+	cmp byte [rdi + rbx], ' '
+	je space
+	cmp byte [rdi + rbx], 9
+	jle not_space
+	cmp byte [rdi + rbx], 13
+	jge not_space
+space:
+	mov rax, 1
+	ret
+not_space:
+	mov rax, 0
+	ret
+
+; returns	-> -1 no sign
+;			-> 0 is +
+;			-> 1 is -
+handle_sign_func:
+	cmp byte [rdi + rbx], '+'
+	je is_plus
+	cmp	byte [rdi + rbx], '-'
+	je is_minus
+	mov rax, -1
+	ret
+is_plus:
+	mov rax, 0
+	ret
+is_minus:
+	mov rax, 1
 	ret
 
 section .note.GNU-stack
