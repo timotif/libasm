@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:31:18 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/13 13:13:17 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 13:58:04 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ char	*ft_strdup(const char *s);
 // Bonus
 int		ft_atoi_base(char *str, char *base);
 void	ft_list_push_front(t_list **begin_list, void *data);
+int		ft_list_size(t_list *begin_list);
 
 // Test
 void	test_strlen();

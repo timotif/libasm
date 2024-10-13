@@ -3,14 +3,13 @@
 ; 	struct s_list *next;
 ; 	void *data;
 ; }
-; void ft_list_push_front(t_list **begin_list, void *data)
-;	**begin_lst	->	rdi
-;	*data		->	rsi
-;	return val	->	rax
-
 ;	sizeof(void*)	= 8
 ;	sizeof(t_list*)	= 8
 ;	sizeof(t_list)	= 16
+; void ft_list_push_front(t_list **begin_list, void *data)
+;	**begin_lst	->	rdi
+;	*data		->	rsi
+
 
 section .text
 	global ft_list_push_front

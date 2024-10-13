@@ -23,7 +23,7 @@ static void test(t_list *list_c, t_list *list_asm) {
 	static int test_number = 1;
 
 	printf("Test %d: ", test_number);
-	ret = !ft_list_cmp(list_c, list_asm, memcmp);
+	ret = !ft_list_cmp(list_c, list_asm, memcmp) && (ft_list_size_c(list_c) == ft_list_size(list_asm));
 	#ifdef DEBUG
 	printf("\nc:\t%s\n", (list_c->data) ? (char *)list_c->data : "NULL");
 	printf("asm:\t%s\n", (list_asm->data) ? (char *)list_asm->data : "NULL");
@@ -65,6 +65,8 @@ void test_list() {
 	list_asm = ft_create_elem(NULL);
 	ft_list_push_front_c(&list_c, "World");
 	ft_list_push_front(&list_asm, "World");
+	ft_list_push_front_c(&list_c, "Hello");
+	ft_list_push_front(&list_asm, "Hello");
 	test(list_c, list_asm);
 	// Extra tests
 	// Clean up
