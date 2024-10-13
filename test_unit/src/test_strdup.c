@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 23:20:58 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/11 15:28:59 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:01:39 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ static void	test(const char *src)
 	printf("Input: %.1000s - Output: %.1000s\n", (src) ? src: "NULL", (dst_ft) ? dst_ft : "NULL");
 	#endif
 	ret = !strcmp(dst_ft, src);
+	#ifndef NOSLEEP
+	usleep(SLEEP_TIME);
+	#endif
 	printf("%s" RESET, (ret) ? GREEN "OK\n" : RED "KO\n");
 	update_unit_test_result(ret);
 	test_number++;

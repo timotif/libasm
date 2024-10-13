@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:31:18 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/12 19:44:50 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 10:58:23 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <limits.h>
 # include <time.h>
 # include <colors.h>
+
+# define SLEEP_TIME 1000000 * 0.2
 
 /*** GLOBAL VARIABLE ***/
 extern int global_result;

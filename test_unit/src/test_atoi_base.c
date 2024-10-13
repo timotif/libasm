@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 19:42:03 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/13 01:22:55 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:00:05 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,9 @@ static void	test(char *str, char *base)
 	printf("asm:\tinput: %s base: %s - return: %d\n", (str) ? str : "NULL", (base) ? base:"NULL", ret_asm);
 	#endif
 	ret = ret_c == ret_asm;
+	#ifndef NOSLEEP
+	usleep(SLEEP_TIME);
+	#endif
 	printf("%s" RESET, (ret) ? GREEN "OK\n" : RED "KO\n");
 	update_unit_test_result(ret);
 	test_number++;

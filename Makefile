@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 18:50:50 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/13 10:54:04 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/13 11:19:10 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ AR = ar	# archive
 AR_FLAGS = rcs # r: insert files, c: create archive, s: write an object-file index
 LINKER = ld -g
 RM = rm -rf 
-MAKE = make -s
+MAKE = make -s --no-print-directory
 
 all: bonus test	# Default target to compile the library and the test unit
 
@@ -83,6 +83,9 @@ exec: $(EXECS)
 test: bonus	# Compile the test unit
 	@$(MAKE) -C $(TEST_DIR) bonus
 
+test_nosleep:	# Compile the test unit with the NOSLEEP flag
+	@$(MAKE) -C $(TEST_DIR) no-sleep
+
 test_debug: bonus	# Compile the test unit in debug mode
 	@$(MAKE) -C $(TEST_DIR) debug
 
@@ -118,4 +121,4 @@ re: fclean all test	# Recompile the library and the test unit
 
 .PHONY: all clean fclean exec re help \
 		test test_debug test_profile test_help \
-		run_test 
+		run_test test_nosleep

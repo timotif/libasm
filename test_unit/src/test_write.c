@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:42:45 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/11 15:47:06 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:02:08 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void test_failure(int *test_number, int fd, const void *buf, size_t count)
 	ssize_t ret_std, ret_ft;
 	int err_std, err_ft;
 	
-	printf(RED "FAILURE TEST: " RESET);
+	printf(BLUE "FAILURE TEST: " RESET);
 	ret_std = write(fd, buf, count);
 	if (ret_std < 0)
 		err_std = errno;
@@ -107,7 +107,7 @@ static void	test(int fd, const void *buf, size_t count)
 	{
 		if (!restore_fd(saved_fd, fd))
 			return ;
-		printf(RED "Malloc failed\n" RESET);
+		printf(BLUE "Malloc failed\n" RESET);
 		test_number++;
 		close(pipe_fd[0]);
 		close(saved_fd);
@@ -143,6 +143,9 @@ static void	test(int fd, const void *buf, size_t count)
 		return ;
 	}	
 	ret = (ret1 == ret2) && (!memcmp(buffer_std, buffer_ft, count));
+	#ifndef NOSLEEP
+	usleep(SLEEP_TIME);
+	#endif
 	printf("%s" RESET, (ret) ? GREEN "OK\n" : RED "KO\n");
 	update_unit_test_result(ret);
 	test_number++;

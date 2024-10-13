@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 23:20:58 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/11 12:39:53 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:01:22 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ static void	test(char *dst, const char *src)
 	printf("Expected return: %p - Returned: %p\n", dst, dst_ft);
 	#endif
 	ret = (dst_ft == dst) && !strcmp(dst_ft, src);
+	#ifndef NOSLEEP
+	usleep(SLEEP_TIME);
+	#endif
 	printf("%s" RESET, (ret) ? GREEN "OK\n" : RED "KO\n");
 	update_unit_test_result(ret);
 	test_number++;

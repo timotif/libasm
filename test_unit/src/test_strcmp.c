@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 22:32:03 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/11 12:39:19 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:01:07 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ static void	test(const char *s1, const char *s2)
 	printf("ft_strcmp\ts1: %.1000s s2: %.1000s -> %d\n", s1, s2, ft_strcmp(s1, s2));
 	#endif
 	ret = normalize(ret1) == normalize(ret2); // normalize because with valgrind strcmp returns -1, 0, 1 
+	#ifndef NOSLEEP
+	usleep(SLEEP_TIME);
+	#endif
 	printf("%s" RESET, (ret) ? GREEN "OK\n" : RED "KO\n");
 	update_unit_test_result(ret);
 	test_number++;

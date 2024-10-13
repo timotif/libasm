@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 20:48:13 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/13 01:13:31 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:01:52 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ static void	test(const char *s)
 	ret = (len_std == len_ft);
 	#ifdef DEBUG
 	printf("%.1000s: %ld - %ld -> ret: %d\n", s, len_std, len_ft, ret);
+	#endif
+	#ifndef NOSLEEP
+	usleep(SLEEP_TIME);
 	#endif
 	printf("%s" RESET, (ret) ? GREEN "OK\n" : RED "KO\n");
 	update_unit_test_result(ret);
