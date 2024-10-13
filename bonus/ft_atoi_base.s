@@ -23,79 +23,80 @@ section .text
 
 %macro invalid_base 1
 cmp byte %1, ' '
-je base_invalid
+je .base_invalid
 cmp byte %1, 9
-je base_invalid
+je .base_invalid
 cmp byte %1, 10
-je base_invalid
+je .base_invalid
 cmp byte %1, 11
-je base_invalid
+je .base_invalid
 cmp byte %1, 12
-je base_invalid
+je .base_invalid
 cmp byte %1, 13
-je base_invalid
+je .base_invalid
 cmp byte %1, '+'
-je base_invalid
+je .base_invalid
 cmp byte %1, '-'
-je base_invalid
+je .base_invalid
 %endmacro
 
 ft_atoi_base:
-safety_check:
+	; Safety check
 	cmp rdi, 0					; if !str
 	je error
 	cmp rsi, 0					; if !base
 	je error					; return 0
+	; Save arguments
 	mov r10, rdi				; r10: str
 	mov r11, rsi				; r11: base
-
+	; ft_strlen
 	mov rdi, rsi				; set arg for ft_strlen
 	call ft_strlen				; rax: base_len
 	mov r12, rax				; r12: base_len
-base_validation:
+	; Base validation
 	cmp rax, 2					; if base_len < 2
 	jl error
 	call validate_base			; if !validate_base
 	cmp rax, 1
 	je error					; return error
-init:
+	; Init
 	mov rbx, -1					; init str counter
 	mov rdi, r10				; rdi: str
- skip_spaces:
+.skip_spaces:
  	inc rbx	
  	call ft_isspace
  	cmp rax, 1
- 	je skip_spaces
- init_sign_reg:
+ 	je .skip_spaces
+	; init_sign_reg:
  	xor r8, r8					; init r8: sign register
- handle_sign:
+.handle_sign:
  	call handle_sign_func
  	cmp rax, -1					; if not sign
- 	je init_return_value		; break
+ 	je .init_return_value		; break
  	inc rbx
  	add r8, rax					; add 1 if -, 0 if + 
- 	jmp handle_sign
-init_return_value:
+ 	jmp .handle_sign
+.init_return_value:
 	xor rax, rax				
-loop_str:						; outer loop
+.loop_str:						; outer loop
 	cmp byte [r10 + rbx], 0	
 	je check_negative	
 	mov rcx, -1					; init base counter
 	mov r13b, [r10 + rbx]		; str[rbx]
-loop_base:							; inner loop
+.loop_base:							; inner loop
 	inc rcx	
 	cmp byte [r11, rcx], 0			; if !base[rcx]
-	je update_result				
+	je .update_result				
 	cmp byte [r11 + rcx], r13b		; or base[rcx] == str[rbx]
-	je update_result				; goto update result
-	jmp loop_base
-update_result:
+	je .update_result				; goto update result
+	jmp .loop_base
+.update_result:
 	cmp rcx, r12				; if rcx (base_idx) >= base_len
 	jge check_negative			; end of base -> check the sign to return
 	mul r12						; base_idx * return_val
 	add rax, rcx				; return_val += base_idx
 	inc rbx						; rbx++
-	jmp loop_str
+	jmp .loop_str
 error:
 	mov rax, 0
 	ret
@@ -115,34 +116,34 @@ validate_base:
 	; init bitmap
 	mov rcx, 32						; num of bytes
 	lea rsi, [rel bitmap]			; move bitmap address to rsi
-init_bitmap_loop:
+.init_bitmap_loop:
 	mov byte [rsi + rcx], 0			; 
-	loop init_bitmap_loop
+	loop .init_bitmap_loop
 	
 	xor rax, rax					; rax = 0
-check_dup_loop:			
+.check_dup_loop:			
 	mov al, [rdi + rcx]				; load current char
 	test al, al						; check if it reached the end
-	jz base_valid			
+	jz .base_valid			
 	invalid_base [rdi + rcx]
-continue_base_loop:
+.continue_base_loop:
 	movzx rbx, al					; zero extend	
 	shr rbx, 3						; find byte index by dividing by 8
 	and al, 7						; find bit inside the byte
 	movzx rdx, al
 	; Check bitmap
 	bt [rsi + rbx], rdx				; [bitmap + rbx] = byte, al = bit
-	jc base_invalid
+	jc .base_invalid
 	
 	; Set the bit in the bitmap
 	bts [rsi + rbx], rdx
 
 	inc rcx
-	jmp check_dup_loop
-base_invalid:
+	jmp .check_dup_loop
+.base_invalid:
 	mov rax, 1
 	ret
-base_valid:
+.base_valid:
 	mov rax, 0
 	ret
 
@@ -150,15 +151,15 @@ base_valid:
 ;				1 is space
 ft_isspace:
 	cmp byte [rdi + rbx], ' '
-	je space
+	je .space
 	cmp byte [rdi + rbx], 9
-	jle not_space
+	jle .not_space
 	cmp byte [rdi + rbx], 13
-	jge not_space
-space:
+	jge .not_space
+.space:
 	mov rax, 1
 	ret
-not_space:
+.not_space:
 	mov rax, 0
 	ret
 
