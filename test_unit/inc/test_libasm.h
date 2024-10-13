@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:31:18 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/13 10:58:23 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 13:13:17 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@
 # include <limits.h>
 # include <time.h>
 # include <colors.h>
-
-# define SLEEP_TIME 1000000 * 0.2
+# include <ft_list.h>
 
 /*** GLOBAL VARIABLE ***/
 extern int global_result;
@@ -53,17 +52,27 @@ typedef enum e_test {
 	MANDATORY,
 	// Bonus functions
 	ATOI_BASE,
+	LIST,
 	// Boundary
 	BONUS,
 	ALL,
 	UNKNOWN,
 } t_test;
 
+// /* Bonus: list handling */
+// typedef struct s_list
+// {
+// 	void			*data;
+// 	struct s_list	*next;
+// }	t_list;
+
 /* function pointer typedef to make arrays of functions */
 typedef void (*t_test_function)(void);
 
 /* The total number of function is ALL-2 to account for MANDATORY and BONUS cases */
 # define TOT_FUNCTIONS ALL - 2
+/* Sleep time for better visual in testing */
+# define SLEEP_TIME 1000000 * 0.2
 
 // General
 void	update_unit_test_result(const int test_result);
@@ -81,6 +90,7 @@ ssize_t	ft_read(int fd, void *buf, size_t count);
 char	*ft_strdup(const char *s);
 // Bonus
 int		ft_atoi_base(char *str, char *base);
+void	ft_list_push_front(t_list **begin_list, void *data);
 
 // Test
 void	test_strlen();
@@ -89,7 +99,8 @@ void	test_strcmp();
 void	test_write();
 void	test_read();
 void	test_strdup();
-// Bonus
+// Bonus test
 void	test_atoi_base();
+void	test_list();
 
 #endif

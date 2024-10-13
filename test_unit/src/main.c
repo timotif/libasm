@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/13 01:07:55 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:54:58 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ t_test	get_test_type(int ac, char **av)
 		return (MANDATORY);
 	if (!strcmp(av[1], "atoi_base") || !strcmp(av[1], "ft_atoi_base"))
 		return (ATOI_BASE);
+	if (!strncmp(av[1], "list", 4) || !strncmp(av[1], "ft_list", 7))
+		return (LIST);
 	if (!strcmp(av[1], "bonus"))
 		return (BONUS);
 	return (UNKNOWN);
@@ -126,6 +128,7 @@ int main(int ac, char **av)
 		test_read,
 		test_strdup,
 		test_atoi_base,
+		test_list
 	};
 	
 	switch (test)
@@ -154,6 +157,9 @@ int main(int ac, char **av)
 		break;
 	case ATOI_BASE:
 		test_atoi_base();
+		break;
+	case LIST:
+		test_list();
 		break;
 	case BONUS:
 		for (size_t i = MANDATORY; i < BONUS - 1; i++)
