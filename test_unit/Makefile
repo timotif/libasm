@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 22:56:00 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/11 12:21:56 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/13 10:47:22 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ CFLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR)
 NAME = test
 LIB_DIR = ../
 LIB = libasm.a
+LIB_BONUS = libasm_bonus.a
 RM = rm -r
 MAKE = make -s
 
@@ -39,7 +40,9 @@ help:
 	@printf "$(BLUE)\tclean: $(NC)Remove object files\n"
 	@printf "$(BLUE)\tfclean: $(NC)Remove object files and executable\n"
 
-all: $(NAME)
+all: bonus
+
+bonus: $(LIB_BONUS)
 
 debug: CFLAGS += -g -DDEBUG
 debug: re
@@ -56,6 +59,13 @@ $(OBJS_DIR)/%.o:$(SRCS_DIR)/%.c | $(OBJS_DIR)
 
 $(LIB_DIR)$(LIB):
 	@$(MAKE) -C $(LIB_DIR)
+
+$(LIB_DIR)$(LIB_BONUS):
+	@$(MAKE) -C $(LIB_DIR) bonus
+
+$(LIB_BONUS): $(LIB_DIR)$(LIB_BONUS) $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIB_DIR) -lasm_bonus
+	@cp $(NAME) $(LIB_DIR)
 
 $(NAME): $(LIB_DIR)$(LIB) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIB_DIR) -lasm 

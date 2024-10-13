@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 18:50:50 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/12 20:23:07 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/13 10:54:04 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ MAGENTA = \033[0;35m
 NC = \033[0m
 
 NAME = libasm.a
+BONUS_NAME = libasm_bonus.a
+TEST_NAME = test
 
 SRCS = $(wildcard $(SRCS_DIR)/*.s)
 BONUS_SRCS = $(wildcard $(BONUS_DIR)/*.s)
@@ -55,8 +57,10 @@ $(NAME): $(OBJS)	# Create the library
 	@$(AR) $(AR_FLAGS) $(NAME) $(OBJS)
 	@echo "$(GREEN)Library '$(NAME)' created$(NC)"
 
-bonus: $(OBJS) $(BONUS_OBJS)	# Compile the bonus functions
-	@$(AR) $(AR_FLAGS) $(NAME) $(OBJS) $(BONUS_OBJS)
+bonus: $(BONUS_NAME)
+
+$(BONUS_NAME): $(NAME) $(BONUS_OBJS)	# Compile the bonus functions
+	@$(AR) $(AR_FLAGS) $(BONUS_NAME) $(OBJS) $(BONUS_OBJS)
 	@echo "$(GREEN)Bonus functions added to the library$(NC)"
 
 # create the object files directory
@@ -77,7 +81,7 @@ $(OBJS_DIR)/%.o: $(BONUS_DIR)/%.s | $(OBJS_DIR)
 exec: $(EXECS)
 
 test: bonus	# Compile the test unit
-	@$(MAKE) -C $(TEST_DIR) test
+	@$(MAKE) -C $(TEST_DIR) bonus
 
 test_debug: bonus	# Compile the test unit in debug mode
 	@$(MAKE) -C $(TEST_DIR) debug
@@ -97,20 +101,21 @@ $(EXECS): %: $(OBJS_DIR)/%.o
 	@echo "$(GREEN)Executable '$(notdir $@)' created$(NC)"
 
 clean:	# Remove object files from the library and the test unit
+ifneq ($(wildcard $(OBJS_DIR) $(TEST_DIR)/obj/*),)
 	@$(MAKE) -C $(TEST_DIR) clean
-ifneq ($(wildcard $(OBJS_DIR)),)
 	@echo "$(RED)Removing object files...$(NC)"
 	@$(RM) $(OBJS_DIR)
 endif
 
 fclean: clean	# Remove object files, executables and the library
+ifneq ($(wildcard $(NAME) $(notdir $(OBJS:.o=)) $(BONUS_NAME) $(TEST_DIR)/obj/* $(TEST_NAME)),)
 	@$(MAKE) -C $(TEST_DIR) fclean
-ifneq ($(wildcard $(NAME) $(notdir $(OBJS:.o=))),)
 	@echo "$(RED)Removing library and executables...$(NC)"
-	@$(RM) $(NAME) $(notdir $(OBJS:.o=))
+	@$(RM) $(NAME) $(notdir $(OBJS:.o=)) $(BONUS_NAME)
 endif
 
 re: fclean all test	# Recompile the library and the test unit
 
-.PHONY: all clean fclean exec re test test_debug test_profile test_help \
-		run_test help bonus
+.PHONY: all clean fclean exec re help \
+		test test_debug test_profile test_help \
+		run_test 
