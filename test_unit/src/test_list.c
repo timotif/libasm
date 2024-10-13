@@ -147,8 +147,8 @@ void test_list() {
 	list_asm = ft_list_copy(list_c);
 	test(list_c, list_asm);
 	// TEST Sorting the list
-	ft_list_sort(&list_asm, memcmp);
-	ft_list_sort_c(&list_c, memcmp);
+	ft_list_sort_c(&list_c, strcmp);
+	ft_list_sort(&list_asm, strcmp);
 	test(list_c, list_asm);
 	// Extra tests
 	// Clean up

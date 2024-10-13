@@ -47,17 +47,22 @@ ft_list_sort:
 	mov r12, r11		; cur = *begin_list
 	mov rcx, [r12 + 8]	; rcx = cur->next
 .list_loop:				; inner_loop
-	cmp qword [rcx], 0	; if !cur->next
+	cmp rcx, 0			; if !cur->next
 	je .unsorted_loop	;	goto outer loop
 	mov rdi, [r12]		;	rdi = cur->data
 	mov rsi, [rcx]		;	rsi = cur->next->data
+	; Avoiding to pass NULL to comparing function
+	test rdi, rdi
+	jz .next
+	test rsi, rsi
+	jz .next
 	PUSH_ARGS			; 	save args
 	call r10			; 	compare
 	POP_ARGS			; 	pop args
 	cdqe				; expands to 64-bit so that a 32-bit 
 						; result is still interpreted correctly  
 	test rax, rax		
-	js .next
+	jle .next
 .swap_data:
 	mov r8, [r12]
 	mov rbx, [rcx]

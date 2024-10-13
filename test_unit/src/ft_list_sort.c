@@ -6,11 +6,12 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:40:47 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/14 00:08:39 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/14 01:12:39 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_list.h>
+#include <test_libasm.h>
 
 void	ft_list_sort_c(t_list **begin_list, int (*cmp)()) {
 	t_list *cur;
@@ -24,7 +25,8 @@ void	ft_list_sort_c(t_list **begin_list, int (*cmp)()) {
 		sorted = 1;
 		cur = *begin_list;
 		while (cur->next) {
-			if (cmp(cur->data, cur->next->data) > 0) {
+			int ret_cmp = cmp(cur->data, cur->next->data);
+			if (ret_cmp > 0) {
 				tmp = cur->data;
 				cur->data = cur->next->data;
 				cur->next->data = tmp;
