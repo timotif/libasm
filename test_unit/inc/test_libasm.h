@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:31:18 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/13 14:26:46 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/14 12:57:23 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int		ft_atoi_base(char *str, char *base);
 void	ft_list_push_front(t_list **begin_list, void *data);
 int		ft_list_size(t_list *begin_list);
 void	ft_list_sort(t_list **begin_list, int (*cmp)());
+void	ft_list_remove_if(t_list **begin_list, void *data_ref, \
+		int (*cmp)(), void (*free_fct)(void *));
 
 // Test
 void	test_strlen();
