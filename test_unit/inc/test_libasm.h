@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:31:18 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/14 12:57:23 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/17 13:36:38 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ extern char *g_base_test_strings[];
  * - mandatory functions are 0 <= function < MANDATORY
  * - bonus functions
  * - BONUS
- * - bonus functions are MANDATORY < function < BONUS
+ * - bonus functions are MANDATORY < function < BONUS - 1
  * - ALL (the total number of functions is ALL - 2)
  */
 typedef enum e_test {
@@ -59,13 +59,6 @@ typedef enum e_test {
 	UNKNOWN,
 } t_test;
 
-// /* Bonus: list handling */
-// typedef struct s_list
-// {
-// 	void			*data;
-// 	struct s_list	*next;
-// }	t_list;
-
 /* function pointer typedef to make arrays of functions */
 typedef void (*t_test_function)(void);
 
@@ -80,6 +73,11 @@ void	print_unit_test_result(void);
 char	*create_very_long_string(size_t size);
 char	*create_random_string(size_t size);
 char	*create_random_printable_string(size_t size);
+t_list	*create_list(size_t size);
+int		ft_list_cmp(t_list *l1, t_list *l2, int (*cmp)());
+t_list	*ft_list_dup(t_list *list);
+void	print_list(t_list *list);
+void	ft_list_delete(t_list **l, int malloced_data);
 
 // Libasm
 size_t	ft_strlen(const char *s);

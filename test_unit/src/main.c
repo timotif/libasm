@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/13 11:54:58 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/17 13:37:43 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,49 +27,6 @@ char *g_base_test_strings[] = {
 	"Tab\tSeparated\tValues",
 	NULL
 };
-
-char *create_very_long_string(size_t size)
-{
-	char *very_long_string = malloc(size);
-	if (!very_long_string)
-	{
-		printf("Memory allocation failed\n");
-		exit (1);
-	}
-	very_long_string[size - 1] = '\0';
-	memset(very_long_string, '~', size - 1);
-	return (very_long_string);
-}
-
-char *create_random_string(size_t size)
-{
-	srand(time(NULL));
-	char *random_string = malloc(size);
-	if (!random_string)
-	{
-		printf("Memory allocation failed\n");
-		exit (1);
-	}
-	random_string[size - 1] = '\0';
-	for (size_t i = 0; i < size - 1; i++)
-		random_string[i] = (char)(rand() % 255 + 1);
-	return (random_string);
-}
-
-char *create_random_printable_string(size_t size)
-{
-	srand(time(NULL));
-	char *random_string = malloc(size);
-	if (!random_string)
-	{
-		printf("Memory allocation failed\n");
-		exit (1);
-	}
-	random_string[size - 1] = '\0';
-	for (size_t i = 0; i < size - 1; i++)
-		random_string[i] = (char)(rand() % 94 + 33);
-	return (random_string);
-}
 
 void	print_unit_test_result(void)
 {
@@ -130,6 +87,8 @@ int main(int ac, char **av)
 		test_atoi_base,
 		test_list
 	};
+	// Seed random
+	srand(time(NULL));
 	
 	switch (test)
 	{

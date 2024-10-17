@@ -1,74 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_list.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/17 13:32:27 by tfregni           #+#    #+#             */
+/*   Updated: 2024/10/17 13:32:28 by tfregni          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <test_libasm.h>
-
-int ft_list_cmp(t_list *l1, t_list *l2, int (*cmp)()) {
-	while (l1 && l2) {
-		if (l1->data == NULL || l2->data == NULL) {
-			if (l1->data != l2->data)
-				return (1);
-			l1 = l1->next;
-			l2 = l2->next;
-			continue;
-		} 
-		if (cmp(l1->data, l2->data, sizeof(void *))) return (1);
-			l1 = l1->next;
-			l2 = l2->next;
-		}
-  	if (l1 || l2) 
-  		return (1);
-  	return (0);
-}
-
-static t_list *create_list(size_t size) {
-	t_list *begin;
-	t_list *cur;
-
-	for (size_t i = 0; i < size; i++) {
-		if (i == 0) {
-			begin = ft_create_elem(create_random_printable_string(10));
-			cur = begin;
-			continue ;
-		}
-		t_list *new = ft_create_elem(create_random_printable_string(10));
-		cur->next = new;
-		cur = new;
-	}
-	return (begin);
-}
-
-static t_list *ft_list_copy(t_list *list) {
-	t_list *new = NULL;
-	t_list *cur = NULL;
-
-	while (list) {
-		if (!new) {
-			new = ft_create_elem(list->data);
-			cur = new;
-		} else {
-			t_list *tmp = ft_create_elem(list->data);
-			cur->next = tmp;
-			cur = tmp;
-		}
-		list = list->next;
-	}
-	return (new);
-}
-
-#ifdef DEBUG
-static void print_list(t_list *list) {
-	while (list) {
-		printf("%s -> ", (list->data) ? (char *)list->data : "NULL");
-		list = list->next;
-	}
-	printf("\n");
-}
-#endif
 
 static void test(t_list *list_c, t_list *list_asm) {
 	int ret;
 	static int test_number = 1;
 
 	printf("Test %d: ", test_number);
-	ret = !ft_list_cmp(list_c, list_asm, memcmp) && (ft_list_size_c(list_c) == ft_list_size(list_asm));
+	ret = !ft_list_cmp(list_c, list_asm, strcmp);
+	ret = ret && (ft_list_size_c(list_c) == ft_list_size(list_asm));
 	#ifdef DEBUG
 	printf("\nc:\t");
 	print_list(list_c);
@@ -81,17 +31,6 @@ static void test(t_list *list_c, t_list *list_asm) {
 	printf("%s" RESET, (ret) ? GREEN "OK\n" : RED "KO\n");
 	update_unit_test_result(ret);
 	test_number++;
-}
-
-static void ft_list_delete(t_list **l)
-{
-	t_list *tmp;
-
-	while (*l) {
-		tmp = *l;
-		*l = (*l)->next;
-		free(tmp);
-	}
 }
 
 void test_list() {
@@ -108,8 +47,8 @@ void test_list() {
 	ft_list_push_front_c(&list_c, "World");
 	ft_list_push_front(&list_asm, "World");
 	test(list_c, list_asm);		
-	ft_list_delete(&list_c);
-	ft_list_delete(&list_asm);
+	ft_list_delete(&list_c, 0);
+	ft_list_delete(&list_asm, 0);
 	// TEST Creating element with NULL data
 	list_c = ft_create_elem(NULL);
 	list_asm = ft_create_elem(NULL);
@@ -140,19 +79,43 @@ void test_list() {
 	ft_list_sort_c(&list_c, NULL);
 	ft_list_sort(&list_asm, NULL);
 	test(list_c, list_asm);
-	ft_list_delete(&list_c);
-	ft_list_delete(&list_asm);
+	ft_list_delete(&list_c, 0);
+	ft_list_delete(&list_asm, 0);
 	// TEST Create randomized list
-	list_c = create_list(3);
-	list_asm = ft_list_copy(list_c);
+	list_c = create_list(10);
+	list_asm = ft_list_dup(list_c);
 	test(list_c, list_asm);
 	// TEST Sorting the list
 	ft_list_sort_c(&list_c, strcmp);
 	ft_list_sort(&list_asm, strcmp);
 	test(list_c, list_asm);
+	ft_list_delete(&list_c, 1);
+	ft_list_delete(&list_asm, 1);
+	// TEST Removing an element
+	list_c = ft_create_elem(strdup("0"));
+	ft_list_push_front_c(&list_c, strdup("1"));
+	ft_list_push_front_c(&list_c, strdup("2"));
+	ft_list_push_front_c(&list_c, strdup("3"));
+	list_asm = ft_list_dup(list_c);
+	test(list_c, list_asm);
+	ft_list_remove_if_c(&list_c, "1", strcmp, free);
+	ft_list_remove_if_c(&list_asm, "1", strcmp, free); // TODO: Use my asm function
+	test(list_c, list_asm);
+	// TEST Removing an element from the beginning
+	ft_list_remove_if_c(&list_c, "3", strcmp, free);
+	ft_list_remove_if_c(&list_asm, "3", strcmp, free); // TODO: Use my asm function
+	test(list_c, list_asm);
+	// TEST Removing an element from the end
+	ft_list_remove_if_c(&list_c, "0", strcmp, free);
+	ft_list_remove_if_c(&list_asm, "0", strcmp, free); // TODO: Use my asm function
+	test(list_c, list_asm);
+	// TEST Removing the last element
+	ft_list_remove_if_c(&list_c, "2", strcmp, free);
+	ft_list_remove_if_c(&list_asm, "2", strcmp, free); // TODO: Use my asm function
+	test(list_c, list_asm);
 	// Extra tests
 	// Clean up
-	ft_list_delete(&list_c);
-	ft_list_delete(&list_asm);
+	ft_list_delete(&list_c, 1);
+	ft_list_delete(&list_asm, 1);
 	print_unit_test_result();
 }

@@ -8,3 +8,5 @@
 ; • Function pointed by cmp and by free_fct will be used as follows :
 ;	(*cmp)(list_ptr->data, data_re
 ;	(*free_fct)(list_ptr->data);
+
+section .note.GNU-stack
