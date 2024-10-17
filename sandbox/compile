@@ -1,4 +1,0 @@
-#!/bin/bash
-
-nasm -f elf64 bonus/$1.s -o obj/$1.o -g && \
-gcc obj/$1.o main.c ft_atoi_base.c -o $1 -L. -lasm -g
