@@ -1,3 +1,15 @@
+;**************************************************************************** ;
+;                                                                             ;
+;                                                        :::      ::::::::    ;
+;   ft_list_size.s                                     :+:      :+:    :+:    ;
+;                                                    +:+ +:+         +:+      ;
+;   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         ;
+;                                                +#+#+#+#+#+   +#+            ;
+;   Created: 2024/10/17 15:47:47 by tfregni           #+#    #+#              ;
+;   Updated: 2024/10/17 15:47:47 by tfregni          ###   ########.fr        ;
+;                                                                             ;
+;**************************************************************************** ;
+
 ; typedef struct s_list
 ; {
 ; 	struct s_list *next;
@@ -6,6 +18,7 @@
 ;	sizeof(void*)	= 8
 ;	sizeof(t_list*)	= 8
 ;	sizeof(t_list)	= 16
+
 ; int	ft_list_size(t_list *begin_list)
 ;	begin_list	-> rdi
 

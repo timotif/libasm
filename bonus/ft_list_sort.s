@@ -1,3 +1,15 @@
+;**************************************************************************** ;
+;                                                                             ;
+;                                                        :::      ::::::::    ;
+;   ft_list_sort.s                                     :+:      :+:    :+:    ;
+;                                                    +:+ +:+         +:+      ;
+;   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         ;
+;                                                +#+#+#+#+#+   +#+            ;
+;   Created: 2024/10/17 15:47:47 by tfregni           #+#    #+#              ;
+;   Updated: 2024/10/17 15:47:47 by tfregni          ###   ########.fr        ;
+;                                                                             ;
+;**************************************************************************** ;
+
 ; typedef struct s_list
 ; {
 ; 	void *data;
@@ -6,6 +18,7 @@
 ;	sizeof(void*)	= 8
 ;	sizeof(t_list*)	= 8
 ;	sizeof(t_list)	= 16
+
 ; void	ft_list_sort_c(t_list **begin_list, int (*cmp)())
 ;	begin_list	-> rdi
 ;	cmp			-> rsi

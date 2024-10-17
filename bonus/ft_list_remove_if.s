@@ -1,4 +1,15 @@
-; ft_list_remove_if
+;**************************************************************************** ;
+;                                                                             ;
+;                                                        :::      ::::::::    ;
+;   ft_list_remove_if.s                                :+:      :+:    :+:    ;
+;                                                    +:+ +:+         +:+      ;
+;   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         ;
+;                                                +#+#+#+#+#+   +#+            ;
+;   Created: 2024/10/17 15:47:47 by tfregni           #+#    #+#              ;
+;   Updated: 2024/10/17 15:47:47 by tfregni          ###   ########.fr        ;
+;                                                                             ;
+;**************************************************************************** ;
+
 ; Allowed functions : free
 ; • Create the function ft_list_remove_if which removes from the list, all elements
 ; whose data compared to data_ref using cmp, makes cmp return 0.
@@ -17,6 +28,7 @@
 ;	sizeof(void*)	= 8
 ;	sizeof(t_list*)	= 8
 ;	sizeof(t_list)	= 16
+;
 ;	void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
 ;		begin_list	->	rdi
 ;		data_ref	->	rsi

@@ -1,4 +1,16 @@
-; char *stpcpy(char *restrict dst, const char *restrict src);
+;**************************************************************************** ;
+;                                                                             ;
+;                                                        :::      ::::::::    ;
+;   ft_strcpy.s                                        :+:      :+:    :+:    ;
+;                                                    +:+ +:+         +:+      ;
+;   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         ;
+;                                                +#+#+#+#+#+   +#+            ;
+;   Created: 2024/10/17 15:47:47 by tfregni           #+#    #+#              ;
+;   Updated: 2024/10/17 15:47:47 by tfregni          ###   ########.fr        ;
+;                                                                             ;
+;**************************************************************************** ;
+
+; char *strcpy(char *restrict dst, const char *restrict src);
 ;	dst		-> rdi
 ;	src		-> rsi
 

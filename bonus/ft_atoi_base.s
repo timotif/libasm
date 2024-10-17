@@ -1,3 +1,15 @@
+;**************************************************************************** ;
+;                                                                             ;
+;                                                        :::      ::::::::    ;
+;   ft_atoi_base.s                                     :+:      :+:    :+:    ;
+;                                                    +:+ +:+         +:+      ;
+;   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         ;
+;                                                +#+#+#+#+#+   +#+            ;
+;   Created: 2024/10/17 15:47:47 by tfregni           #+#    #+#              ;
+;   Updated: 2024/10/17 15:47:47 by tfregni          ###   ########.fr        ;
+;                                                                             ;
+;**************************************************************************** ;
+
 ; • Write a function that converts the initial portion of the string pointed by str to int
 ; representation.
 ; • str is in a specific base given as a second parameter.
