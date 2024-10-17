@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:31:13 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/17 13:36:16 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/17 14:54:22 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ int ft_list_cmp(t_list *l1, t_list *l2, int (*cmp)()) {
 			l2 = l2->next;
 			continue;
 		} 
-		if (cmp(l1->data, l2->data, sizeof(void *))) return (1);
-			l1 = l1->next;
-			l2 = l2->next;
-		}
+		if (cmp(l1->data, l2->data)) 
+			return (1);
+		l1 = l1->next;
+		l2 = l2->next;
+	}
   	if (l1 || l2) 
   		return (1);
   	return (0);

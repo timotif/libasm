@@ -1,7 +1,7 @@
 ; typedef struct s_list
 ; {
-; 	struct s_list *next;
 ; 	void *data;
+; 	struct s_list *next;
 ; }
 ;	sizeof(void*)	= 8
 ;	sizeof(t_list*)	= 8
@@ -17,6 +17,8 @@ section .text
 	cmp rdi, 0
 	je .return
 	cmp rsi, 0
+	je .return
+	cmp qword [rdi], 0
 	je .return
 	cmp qword [rsi], 0
 	je .return
