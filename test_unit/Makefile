@@ -6,13 +6,15 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 22:56:00 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/13 11:10:30 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/17 22:30:16 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Colors
 RED = \033[0;31m
 YELLOW = \033[0;33m
+CYAN = \033[0;36m
+MAGENTA = \033[0;35m
 GREEN = \033[0;32m
 BLUE = \033[0;34m
 NC = \033[0m
@@ -30,6 +32,15 @@ LIB = libasm.a
 LIB_BONUS = libasm_bonus.a
 RM = rm -r
 MAKE = make -s
+
+test_me:
+ifeq ($(wildcard $(NAME)),)
+	@echo ""
+	@echo "$(CYAN)*************"
+	@echo "* TEST_UNIT *"
+	@echo "*************$(NC)"
+endif
+	@$(MAKE) all
 
 help:
 	@printf "$(YELLOW)Usage: make [test | debug | profile | re | clean | fclean]\n$(NC)"
@@ -87,4 +98,4 @@ endif
 
 re: fclean all
 
-.PHONY: all clean fclean re debug profile
+.PHONY: all test_me clean fclean re debug profile

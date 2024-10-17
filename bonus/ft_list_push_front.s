@@ -12,8 +12,8 @@
 
 ; typedef struct s_list
 ; {
-; 	struct s_list *next;
 ; 	void *data;
+; 	struct s_list *next;
 ; }
 ;	sizeof(void*)	= 8
 ;	sizeof(t_list*)	= 8

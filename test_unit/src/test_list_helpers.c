@@ -6,12 +6,17 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:31:13 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/17 14:54:22 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/17 22:27:11 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <test_libasm.h>
 
+/**
+ * @brief: Deletes a list
+ * @param: l: The list to delete
+ * @param: expects 1 if the data was malloced, 0 otherwise
+ */
 void ft_list_delete(t_list **l, int malloced_data)
 {
 	t_list *tmp;
@@ -25,6 +30,14 @@ void ft_list_delete(t_list **l, int malloced_data)
 	}
 }
 
+/**
+ * @brief: Compares two lists
+ * @param: l1: The first list
+ * @param: l2: The second list
+ * @param: cmp: The comparison function
+ * @note: The comparison function will be called as cmp(l1->data, l2->data)
+ * @return: 0 if the lists are equal, 1 otherwise
+ */
 int ft_list_cmp(t_list *l1, t_list *l2, int (*cmp)()) {
 	while (l1 && l2) {
 		if (l1->data == NULL || l2->data == NULL) {
@@ -44,6 +57,11 @@ int ft_list_cmp(t_list *l1, t_list *l2, int (*cmp)()) {
   	return (0);
 }
 
+/**
+ * @brief: Creates a list of random strings
+ * @param: size: The size of the list
+ * @return: The list
+ */
 t_list *create_list(size_t size) {
 	t_list *begin;
 	t_list *cur;
@@ -86,6 +104,10 @@ t_list *ft_list_dup(t_list *list) {
 }
 
 #ifdef DEBUG
+/**
+ * @brief: Prints a list
+ * @param: list: The list to print
+ */
 void print_list(t_list *list) {
 	while (list) {
 		printf("%s -> ", (list->data) ? (char *)list->data : "NULL");

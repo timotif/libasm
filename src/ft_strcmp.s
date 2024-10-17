@@ -37,7 +37,7 @@ _end:
 	sub cl, dl ; update return value if a string is over
 
 _return:
-	movsx rax, cl ; sign-extend al to rax
+	movsx rax, cl ; sign-extend cl to rax
 	ret
 
 section .note.GNU-stack

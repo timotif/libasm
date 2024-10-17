@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 18:50:50 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/17 15:47:47 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/17 21:53:14 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,14 +50,9 @@ banner:
 	@echo "▐▙▄▄▖▗▄█▄▖▐▙▄▞▘▐▌ ▐▌▗▄▄▞▘▐▌  ▐▌"
 	@echo "               tfregni@42berlin$(NC)"
 	@echo ""
-	@echo "$(RED)Welcome to the libasm project!$(NC)"
+	@echo "$(CYAN)To use my tests check your options with $(YELLOW)make help$(NC)" 
 	@echo ""
-	@echo "$(CYAN)To use my tests"
-	@echo "	- copy them in the $(TEST_DIR) folder"
-	@echo "	- uncomment the test related rules in the Makefile"
-	@echo "	- check with $(YELLOW)make help$(CYAN) for more information" 
-	@echo ""
-	@$(MAKE) $(NAME)
+	@$(MAKE) all
 	
 $(NAME): $(OBJS)	# Create the library
 	@$(AR) $(AR_FLAGS) $(NAME) $(OBJS)
@@ -98,26 +93,26 @@ $(OBJS_DIR)/%.o: $(BONUS_DIR)/%.s | $(OBJS_DIR)
 	@$(ASMC) $(ASM_FLAGS) $< -o $@
 	@echo "$(MAGENTA)Compiling bonus $(notdir $<)$(NC)"
 
-# Rule to create the executable
-exec: $(EXECS)
+test: bonus	# Compile the test unit
+	@$(MAKE) -C $(TEST_DIR) test_me
+ifneq ("$(wildcard $(TEST_NAME))", "")
+	@printf "\n$(RED)Note:$(NC) You can call $(YELLOW)./test $(BLUE)[ mandatory | bonus | <function_name> ]$(NC) to run the test unit\n"
+endif
 
-# test: bonus	# Compile the test unit
-# 	@$(MAKE) -C $(TEST_DIR) bonus
+test_nosleep:	# Compile the test unit with the NOSLEEP flag
+	@$(MAKE) -C $(TEST_DIR) no-sleep
 
-# test_nosleep:	# Compile the test unit with the NOSLEEP flag
-# 	@$(MAKE) -C $(TEST_DIR) no-sleep
+test_debug: bonus	# Compile the test unit in debug mode
+	@$(MAKE) -C $(TEST_DIR) debug
 
-# test_debug: bonus	# Compile the test unit in debug mode
-# 	@$(MAKE) -C $(TEST_DIR) debug
+test_profile: bonus	# Compile the test unit with profiling
+	@$(MAKE) -C $(TEST_DIR) profile
 
-# test_profile: bonus	# Compile the test unit with profiling
-# 	@$(MAKE) -C $(TEST_DIR) profile
+test_help:	# Display the help message of the test unit
+	@$(MAKE) -C $(TEST_DIR) help
 
-# test_help:	# Display the help message of the test unit
-# 	@$(MAKE) -C $(TEST_DIR) help
-
-# run_test: test	# Run the test unit
-# 	@./test
+run_test: test	# Run the test unit
+	@./test
 
 clean:	# Remove object files from the library and the test unit
 ifneq ($(wildcard $(OBJS_DIR) $(TEST_DIR)/obj/*),)
@@ -133,8 +128,8 @@ ifneq ($(wildcard $(NAME) $(notdir $(OBJS:.o=)) $(BONUS_NAME) $(TEST_DIR)/obj/* 
 	@$(RM) $(NAME) $(notdir $(OBJS:.o=)) $(BONUS_NAME)
 endif
 
-re: fclean $(NAME)	# Recompile the library and the test unit
+re: fclean all	# Recompile the library and the test unit
 
 .PHONY: all clean fclean exec re help \
-		# test test_debug test_profile test_help \
-		# run_test test_nosleep
+		test test_debug test_profile test_help \
+		run_test test_nosleep
