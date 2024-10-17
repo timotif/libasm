@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:32:27 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/17 14:28:52 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:23:54 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,19 +99,19 @@ void test_list() {
 	list_asm = ft_list_dup(list_c);
 	test(list_c, list_asm);
 	ft_list_remove_if_c(&list_c, "1", strcmp, free);
-	ft_list_remove_if(&list_asm, "1", strcmp, free); // TODO: Use my asm function
+	ft_list_remove_if(&list_asm, "1", strcmp, free);
 	test(list_c, list_asm);
 	// TEST Removing an element from the beginning
 	ft_list_remove_if_c(&list_c, "3", strcmp, free);
-	ft_list_remove_if(&list_asm, "3", strcmp, free); // TODO: Use my asm function
+	ft_list_remove_if(&list_asm, "3", strcmp, free);
 	test(list_c, list_asm);
 	// TEST Removing an element from the end
 	ft_list_remove_if_c(&list_c, "0", strcmp, free);
-	ft_list_remove_if(&list_asm, "0", strcmp, free); // TODO: Use my asm function
+	ft_list_remove_if(&list_asm, "0", strcmp, free);
 	test(list_c, list_asm);
 	// TEST Removing the last element
 	ft_list_remove_if_c(&list_c, "2", strcmp, free);
-	ft_list_remove_if(&list_asm, "2", strcmp, free); // TODO: Use my asm function
+	ft_list_remove_if(&list_asm, "2", strcmp, free);
 	test(list_c, list_asm);
 	// Extra tests
 	// Clean up

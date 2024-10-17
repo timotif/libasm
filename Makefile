@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 18:50:50 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/13 11:19:10 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/17 15:47:47 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,23 +41,44 @@ LINKER = ld -g
 RM = rm -rf 
 MAKE = make -s --no-print-directory
 
-all: bonus test	# Default target to compile the library and the test unit
+banner:
+	clear
+	@echo "$(YELLOW)"
+	@echo "▗▖   ▗▄▄▄▖▗▄▄▖  ▗▄▖  ▗▄▄▖▗▖  ▗▖"
+	@echo "▐▌     █  ▐▌ ▐▌▐▌ ▐▌▐▌   ▐▛▚▞▜▌"
+	@echo "▐▌     █  ▐▛▀▚▖▐▛▀▜▌ ▝▀▚▖▐▌  ▐▌"
+	@echo "▐▙▄▄▖▗▄█▄▖▐▙▄▞▘▐▌ ▐▌▗▄▄▞▘▐▌  ▐▌"
+	@echo "               tfregni@42berlin$(NC)"
+	@echo ""
+	@echo "$(RED)Welcome to the libasm project!$(NC)"
+	@echo ""
+	@echo "$(CYAN)To use my tests"
+	@echo "	- copy them in the $(TEST_DIR) folder"
+	@echo "	- uncomment the test related rules in the Makefile"
+	@echo "	- check with $(YELLOW)make help$(CYAN) for more information" 
+	@echo ""
+	@$(MAKE) $(NAME)
+	
+$(NAME): $(OBJS)	# Create the library
+	@$(AR) $(AR_FLAGS) $(NAME) $(OBJS)
+	@echo "$(GREEN)Library '$(NAME)' created$(NC)"
+	
+all: bonus test	# Target to compile the library and the test unit
 
 help:	# Display this helpful message
 # Automatically generating the help taking the rules from the Makefile with awk
+# (credit to mcutura@42berlin for the idea!)
 	@awk 'BEGIN { \
 	FS = ":.*#"; printf "Usage:\n\t$(YELLOW)make $(CYAN)<target> \
 	$(NC)\n\nTargets:\n"; } \
 	/^[a-zA-Z_0-9-]+:.*?#/ { \
 	printf "$(CYAN)%-16s$(MAGENTA)%s\n$(NC)", $$1, $$2 } ' \
 	Makefile
+ifneq ("$(wildcard $(TEST_NAME))", "")
 	@printf "\n$(RED)Note:$(NC) You can call $(YELLOW)./test $(BLUE)[ mandatory | bonus | <function_name> ]$(NC) to run the test unit\n"
+endif
 
-$(NAME): $(OBJS)	# Create the library
-	@$(AR) $(AR_FLAGS) $(NAME) $(OBJS)
-	@echo "$(GREEN)Library '$(NAME)' created$(NC)"
-
-bonus: $(BONUS_NAME)
+bonus: $(BONUS_NAME)	# Compile the bonus functions
 
 $(BONUS_NAME): $(NAME) $(BONUS_OBJS)	# Compile the bonus functions
 	@$(AR) $(AR_FLAGS) $(BONUS_NAME) $(OBJS) $(BONUS_OBJS)
@@ -80,28 +101,23 @@ $(OBJS_DIR)/%.o: $(BONUS_DIR)/%.s | $(OBJS_DIR)
 # Rule to create the executable
 exec: $(EXECS)
 
-test: bonus	# Compile the test unit
-	@$(MAKE) -C $(TEST_DIR) bonus
+# test: bonus	# Compile the test unit
+# 	@$(MAKE) -C $(TEST_DIR) bonus
 
-test_nosleep:	# Compile the test unit with the NOSLEEP flag
-	@$(MAKE) -C $(TEST_DIR) no-sleep
+# test_nosleep:	# Compile the test unit with the NOSLEEP flag
+# 	@$(MAKE) -C $(TEST_DIR) no-sleep
 
-test_debug: bonus	# Compile the test unit in debug mode
-	@$(MAKE) -C $(TEST_DIR) debug
+# test_debug: bonus	# Compile the test unit in debug mode
+# 	@$(MAKE) -C $(TEST_DIR) debug
 
-test_profile: bonus	# Compile the test unit with profiling
-	@$(MAKE) -C $(TEST_DIR) profile
+# test_profile: bonus	# Compile the test unit with profiling
+# 	@$(MAKE) -C $(TEST_DIR) profile
 
-test_help:	# Display the help message of the test unit
-	@$(MAKE) -C $(TEST_DIR) help
+# test_help:	# Display the help message of the test unit
+# 	@$(MAKE) -C $(TEST_DIR) help
 
-run_test: test	# Run the test unit
-	@./test
-
-# Rule to link .o files to executables	
-$(EXECS): %: $(OBJS_DIR)/%.o
-	@$(LINKER) -fPIE -pie -lc -L. -lasm -o $(notdir $@) $<
-	@echo "$(GREEN)Executable '$(notdir $@)' created$(NC)"
+# run_test: test	# Run the test unit
+# 	@./test
 
 clean:	# Remove object files from the library and the test unit
 ifneq ($(wildcard $(OBJS_DIR) $(TEST_DIR)/obj/*),)
@@ -117,8 +133,8 @@ ifneq ($(wildcard $(NAME) $(notdir $(OBJS:.o=)) $(BONUS_NAME) $(TEST_DIR)/obj/* 
 	@$(RM) $(NAME) $(notdir $(OBJS:.o=)) $(BONUS_NAME)
 endif
 
-re: fclean all test	# Recompile the library and the test unit
+re: fclean $(NAME)	# Recompile the library and the test unit
 
 .PHONY: all clean fclean exec re help \
-		test test_debug test_profile test_help \
-		run_test test_nosleep
+		# test test_debug test_profile test_help \
+		# run_test test_nosleep

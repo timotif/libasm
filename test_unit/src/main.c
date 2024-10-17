@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 23:56:28 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/17 13:37:43 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:24:35 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ void	print_unit_test_result(void)
 
 void	update_unit_test_result(const int test_result)
 {
-	#ifdef DEBUG
-	// printf("global_result: %d test_result: %d\n", global_result, !test_result);
-	#endif
 	if (global_result)
 		return ;
 	global_result = !test_result;
@@ -75,7 +72,6 @@ t_test	get_test_type(int ac, char **av)
 
 int main(int ac, char **av)
 {
-	/* TODO Implement Usage message */
 	t_test test = get_test_type(ac, av);
 	t_test_function test_functions[TOT_FUNCTIONS] = {
 		test_strlen,
