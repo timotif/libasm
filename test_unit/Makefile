@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 22:56:00 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/18 17:08:34 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/18 17:37:16 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +34,8 @@ RM = rm -r
 MAKE = make -s
 
 ifeq ($(shell uname -m), arm64)
-	CC := gcc
-    CFLAGS += --target=x86_64-apple-darwin
+	CC := clang
+    CFLAGS += -arch x86_64
 endif
 
 test_me:
