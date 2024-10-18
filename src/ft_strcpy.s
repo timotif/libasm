@@ -15,11 +15,11 @@
 ;	src		-> rsi
 
 section .text
-	global ft_strcpy
-	extern ft_strlen
+	global _ft_strcpy
+	extern _ft_strlen
 
 ; First approach
-; ft_strcpy:
+; _ft_strcpy:
 ; 	mov rbx, rdi ; save to rbx the first arg: dst
 ; 	mov rdi, rsi ; move to rdi the src so that it's the arg for ft_strlen
 ; 	call ft_strlen ; call ft_strlen on the src
@@ -39,10 +39,10 @@ section .text
 ; 	ret
 
 ; Better approach using movsb (42% improvement on a 4MB-long string)
-ft_strcpy:
+_ft_strcpy:
 	mov rbx, rdi ; save away rdi
 	mov rdi, rsi ; set source string as arg for strlen
-	call ft_strlen
+	call _ft_strlen
 	mov rdi, rbx ; get back rdi original content
 	mov rcx, rax ; set the counter for rep on the return value of strlen
 	inc rcx ; include null terminator

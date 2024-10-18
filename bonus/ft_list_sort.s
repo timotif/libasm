@@ -24,7 +24,7 @@
 ;	cmp			-> rsi
 
 section .text
-	global ft_list_sort
+	global _ft_list_sort
 
 %macro SAFETY_CHECK 0
 	cmp rdi, 0
@@ -50,7 +50,7 @@ section .text
 %endmacro
 
 section .text
-ft_list_sort:
+_ft_list_sort:
 	SAFETY_CHECK
 	xor r9, r9			; r9: sorted flag
 	mov r10, rsi		; r10 = (*cmp)()

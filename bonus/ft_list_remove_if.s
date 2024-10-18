@@ -36,7 +36,7 @@
 ;		free_fct	->	rcx
 
 section .text
-	global ft_list_remove_if
+	global _ft_list_remove_if
 	extern free
 
 %macro SAFETY_CHECK 0
@@ -72,7 +72,7 @@ pop r9
 pop r8
 %endmacro
 
-ft_list_remove_if:
+_ft_list_remove_if:
 	SAFETY_CHECK
 							; r8 = cur
 							; r9 = prev

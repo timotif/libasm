@@ -24,10 +24,10 @@
 ;	*data		->	rsi
 
 section .text
-	global ft_list_push_front
+	global _ft_list_push_front
 	extern malloc
 
-ft_list_push_front:
+_ft_list_push_front:
 	; safety check (I accept NULL as data)
 	cmp rdi, 0
 	je .return_err

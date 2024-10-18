@@ -13,10 +13,10 @@
 ; 	s	-> rdi
 
 section .text
-	global ft_strlen
+	global _ft_strlen
 
 ; First approach
-ft_strlen:
+_ft_strlen:
 	xor rax, rax ; init counter
 
 _loop:

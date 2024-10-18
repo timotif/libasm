@@ -15,9 +15,9 @@
 ;	s2	-> rsi
 
 section .text
-	global ft_strcmp
+	global _ft_strcmp
 
-ft_strcmp:
+_ft_strcmp:
 	; s1: rdi -  s2: rsi
 	xor rbx, rbx ; init counter
 

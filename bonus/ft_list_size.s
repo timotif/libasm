@@ -23,9 +23,9 @@
 ;	begin_list	-> rdi
 
 section .text
-	global ft_list_size
+	global _ft_list_size
 
-ft_list_size:
+_ft_list_size:
 	xor rax, rax		; rax = 0
 .loop:
 	cmp rdi, 0			; if !begin_list; return

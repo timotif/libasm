@@ -14,15 +14,15 @@
 ;	s	-> rdi
 
 section .text
-	global ft_strdup
-	extern ft_strlen
+	global _ft_strdup
+	extern _ft_strlen
 	extern __errno_location
 	extern malloc
-	extern ft_strcpy
+	extern _ft_strcpy
 
-ft_strdup:
+_ft_strdup:
 	push rdi ; save the src string to the stack
-	call ft_strlen
+	call _ft_strlen
 	mov rdi, rax ; rdi: len(src)
 	inc rdi ; add space for null-terminator
 	%ifndef DARWIN
@@ -35,7 +35,7 @@ ft_strdup:
 	jz _errno
 	mov rdi, rax
 	pop rsi
-	call ft_strcpy
+	call _ft_strcpy
 	ret
 
 _errno:

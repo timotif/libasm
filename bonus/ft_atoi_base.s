@@ -30,8 +30,8 @@ section .bss
 	bitmap resb 32 ; 256-bit bitmap (32 bytes)
 
 section .text
-	global ft_atoi_base
-	extern ft_strlen
+	global _ft_atoi_base
+	extern _ft_strlen
 
 %macro invalid_base 1
 cmp byte %1, ' '
@@ -52,7 +52,7 @@ cmp byte %1, '-'
 je .base_invalid
 %endmacro
 
-ft_atoi_base:
+_ft_atoi_base:
 	; Safety check
 	cmp rdi, 0					; if !str
 	je error
@@ -63,7 +63,7 @@ ft_atoi_base:
 	mov r11, rsi				; r11: base
 	; ft_strlen
 	mov rdi, rsi				; set arg for ft_strlen
-	call ft_strlen				; rax: base_len
+	call _ft_strlen				; rax: base_len
 	mov r12, rax				; r12: base_len
 	; Base validation
 	cmp rax, 2					; if base_len < 2
