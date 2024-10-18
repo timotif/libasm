@@ -29,11 +29,17 @@ ft_write:
 _errno:
 	mov rdi, rax
 	neg rdi
+	%ifndef DARWIN
 	call [rel __errno_location wrt ..got]	; call the function __errno_location in relative position
 											; with respect to (wrt) the Global Offset Table (got)
 											; this guarantees PIE compliance (Position Independent Executable)
+	%else
+	call __errno_location
+	%endif
 	mov [rax], rdi
 	mov rax, -1
 	ret
 
+%ifndef DARWIN
 section .note.GNU-stack
+%endif

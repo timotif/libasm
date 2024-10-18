@@ -36,7 +36,11 @@ ft_list_push_front:
 	push rsi			
 	; prepare arg for malloc 
 	mov rdi, 16
+	%ifndef DARWIN
 	call [rel malloc wrt ..got]	; call compliant with PIE
+	%else
+	call malloc
+	%endif
 	cmp rax, 0					; if malloc returns NULL
 	je .return_err				; return error
 	; rax = new_node		
@@ -52,4 +56,6 @@ ft_list_push_front:
 	mov rax, 0
 	ret
 
-section .note.GNU-stack
+%ifndef DARWIN
+section .note.GNU-stackn
+%endif

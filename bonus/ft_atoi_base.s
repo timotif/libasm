@@ -192,4 +192,6 @@ is_minus:
 	mov rax, 1
 	ret
 
-section .note.GNU-stack
+%ifndef DARWIN
+section .note.GNU-stackn
+%endif

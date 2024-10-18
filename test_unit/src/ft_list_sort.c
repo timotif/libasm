@@ -6,14 +6,14 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:40:47 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/14 01:12:39 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/18 17:09:16 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_list.h>
 #include <test_libasm.h>
 
-void	ft_list_sort_c(t_list **begin_list, int (*cmp)()) {
+void	ft_list_sort_c(t_list **begin_list, int (*cmp)(void *, void *)) {
 	t_list *cur;
 	void *tmp;
 	int sorted;

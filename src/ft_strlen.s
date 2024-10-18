@@ -40,4 +40,6 @@ _return:
 ;     mov rax, rcx        ; Move the length to rax (return value)
 ;     ret
 
+%ifndef DARWIN
 section .note.GNU-stack
+%endif

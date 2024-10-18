@@ -50,4 +50,6 @@ ft_strcpy:
 	mov rax, rbx ; set return value to the original dst value
 	ret
 
+%ifndef DARWIN
 section .note.GNU-stack
+%endif

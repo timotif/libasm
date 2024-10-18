@@ -36,4 +36,6 @@ ft_list_size:
 .return:
 	ret
 
-section .note.GNU-stack
+%ifndef DARWIN
+section .note.GNU-stackn
+%endif

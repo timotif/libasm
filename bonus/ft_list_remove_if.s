@@ -113,7 +113,11 @@ ft_list_remove_if:
 		POP_ARGS	
 		PUSH_ARGS	
 		mov rdi, r8			; free(cur)
+		%ifndef DARWIN
 		call [rel free wrt ..got]
+		%else
+		call free
+		%endif
 		POP_ARGS
 	.case_end:
 		mov rdx, [r12]
@@ -126,4 +130,6 @@ ft_list_remove_if:
 	ret
 
 
-section .note.GNU-stack
+%ifndef DARWIN
+section .note.GNU-stackn
+%endif

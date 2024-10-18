@@ -92,4 +92,6 @@ ft_list_sort:
 .return:
 	ret
 
-section .note.GNU-stack
+%ifndef DARWIN
+section .note.GNU-stackn
+%endif

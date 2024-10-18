@@ -40,4 +40,6 @@ _return:
 	movsx rax, cl ; sign-extend cl to rax
 	ret
 
+%ifndef DARWIN
 section .note.GNU-stack
+%endif

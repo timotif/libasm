@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 18:50:50 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/17 21:53:14 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/18 16:58:23 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,12 +34,18 @@ OBJS_DIR = obj
 TEST_DIR = test_unit
 
 ASMC = nasm
-ASM_FLAGS = -f elf64 -g # -f: format, elf64: 64-bit ELF format
+ASM_FLAGS = -g # -f: format, elf64: 64-bit ELF format
 AR = ar	# archive
 AR_FLAGS = rcs # r: insert files, c: create archive, s: write an object-file index
 LINKER = ld -g
 RM = rm -rf 
 MAKE = make -s --no-print-directory
+
+ifeq ($(shell uname), Darwin)
+	ASM_FLAGS += -f macho64 -DDARWIN
+else ifeq ($(shell uname), Linux)
+	ASM_FLAGS += -f elf64
+endif
 
 banner:
 	clear

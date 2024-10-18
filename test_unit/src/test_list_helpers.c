@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:31:13 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/17 22:27:11 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/18 17:09:37 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void ft_list_delete(t_list **l, int malloced_data)
  * @note: The comparison function will be called as cmp(l1->data, l2->data)
  * @return: 0 if the lists are equal, 1 otherwise
  */
-int ft_list_cmp(t_list *l1, t_list *l2, int (*cmp)()) {
+int ft_list_cmp(t_list *l1, t_list *l2, int (*cmp)(void *, void *)) {
 	while (l1 && l2) {
 		if (l1->data == NULL || l2->data == NULL) {
 			if (l1->data != l2->data)

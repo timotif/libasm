@@ -25,7 +25,11 @@ ft_strdup:
 	call ft_strlen
 	mov rdi, rax ; rdi: len(src)
 	inc rdi ; add space for null-terminator
+	%ifndef DARWIN
 	call [rel malloc wrt ..got]
+	%else
+	call malloc
+	%endif
 	; xor rax, rax ; simulate failed call
 	test rax, rax
 	jz _errno
@@ -37,9 +41,15 @@ ft_strdup:
 _errno:
 	mov rdi, rax ; save error code
 	neg rdi
+	%ifndef DARWIN
 	call [rel __errno_location wrt ..got]
+	%else
+	call __errno_location
+	%endif
 	mov [rax], rdi
 	mov rax, 0
 	ret
 
+%ifndef DARWIN
 section .note.GNU-stack
+%endif
