@@ -37,7 +37,7 @@
 
 section .text
 	global _ft_list_remove_if
-	extern free
+	extern _free
 
 %macro SAFETY_CHECK 0
 	cmp rdi, 0
@@ -116,7 +116,7 @@ _ft_list_remove_if:
 		%ifndef DARWIN
 		call [rel free wrt ..got]
 		%else
-		call free
+		call _free
 		%endif
 		POP_ARGS
 	.case_end:

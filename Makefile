@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 18:50:50 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/18 17:12:31 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/21 21:38:39 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,7 @@ $(OBJS_DIR)/%.o: $(BONUS_DIR)/%.s | $(OBJS_DIR)
 	@echo "$(MAGENTA)Compiling bonus $(notdir $<)$(NC)"
 
 test: bonus	# Compile the test unit
-	@$(MAKE) -C $(TEST_DIR) test_me
+	$(MAKE) -C $(TEST_DIR) test_me
 ifneq ("$(wildcard $(TEST_NAME))", "")
 	@printf "\n$(RED)Note:$(NC) You can call $(YELLOW)./test $(BLUE)[ mandatory | bonus | <function_name> ]$(NC) to run the test unit\n"
 endif

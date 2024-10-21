@@ -18,7 +18,11 @@
 
 section .text
 	global _ft_read
+	%ifndef DARWIN
 	extern __errno_location
+	%else
+	extern ___error
+	%endif
 
 _ft_read:
 	mov rax, 0
@@ -34,7 +38,7 @@ _errno:
 											; with respect to (wrt) the Global Offset Table (got)
 											; this guarantees PIE compliance (Position Independent Executable)
 	%else
-	call __errno_location
+	call ___error
 	%endif
 	mov [rax], rdi
 	mov rax, -1

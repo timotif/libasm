@@ -25,7 +25,7 @@
 
 section .text
 	global _ft_list_push_front
-	extern malloc
+	extern _malloc
 
 _ft_list_push_front:
 	; safety check (I accept NULL as data)
@@ -39,7 +39,7 @@ _ft_list_push_front:
 	%ifndef DARWIN
 	call [rel malloc wrt ..got]	; call compliant with PIE
 	%else
-	call malloc
+	call _malloc
 	%endif
 	cmp rax, 0					; if malloc returns NULL
 	je .return_err				; return error

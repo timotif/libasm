@@ -16,8 +16,12 @@
 section .text
 	global _ft_strdup
 	extern _ft_strlen
+	%ifdef DARWIN
+	extern ___error
+	%else
 	extern __errno_location
-	extern malloc
+	%endif
+	extern _malloc
 	extern _ft_strcpy
 
 _ft_strdup:
@@ -28,7 +32,7 @@ _ft_strdup:
 	%ifndef DARWIN
 	call [rel malloc wrt ..got]
 	%else
-	call malloc
+	call _malloc
 	%endif
 	; xor rax, rax ; simulate failed call
 	test rax, rax
@@ -44,7 +48,7 @@ _errno:
 	%ifndef DARWIN
 	call [rel __errno_location wrt ..got]
 	%else
-	call __errno_location
+	call ___error
 	%endif
 	mov [rax], rdi
 	mov rax, 0

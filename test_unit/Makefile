@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 22:56:00 by tfregni           #+#    #+#              #
-#    Updated: 2024/10/18 22:58:55 by tfregni          ###   ########.fr        #
+#    Updated: 2024/10/21 21:46:27 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ $(LIB_DIR)$(LIB_BONUS):
 	@$(MAKE) -C $(LIB_DIR) bonus
 
 $(LIB_BONUS): $(LIB_DIR)$(LIB_BONUS) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIB_DIR) -lasm_bonus
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIB_DIR) -lc -lasm_bonus -o $(NAME)
 	@cp $(NAME) $(LIB_DIR)
 
 $(NAME): $(LIB_DIR)$(LIB) $(OBJS)
