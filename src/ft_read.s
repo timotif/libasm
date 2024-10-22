@@ -25,15 +25,19 @@ section .text
 	%endif
 
 _ft_read:
+	%ifndef DARWIN
 	mov rax, 0
+	%else
+	mov rax, 0x2000003
+	%endif
 	syscall
-	test rax, rax
-	js _errno
+	; test rax, rax
+	jc _errno
 	ret
 _errno:
 	mov rdi, rax
-	neg rdi
 	%ifndef DARWIN
+	neg rdi
 	call [rel __errno_location wrt ..got]	; call the function __errno_location in relative position
 											; with respect to (wrt) the Global Offset Table (got)
 											; this guarantees PIE compliance (Position Independent Executable)
