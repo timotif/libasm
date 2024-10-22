@@ -62,9 +62,11 @@ push r9
 push r10
 push r11
 push r12
+push r13
 %endmacro
 
 %macro POP_ARGS 0
+pop r13
 pop r12
 pop r11
 pop r10
@@ -81,10 +83,12 @@ _ft_list_remove_if:
 	mov r12, rdi			; r12 = begin_list
 	mov r8, [r12]			; cur = *begin_list
 	mov r9, r8				; prev = cur
+	mov r13, rsi			; r13 = data_ref
 .list_loop:	
 	test r8, r8				; while (cur)
 	jz .return	
-	mov rdi, [r8]			; 
+	mov rdi, [r8]			;
+	mov rsi, r13			; rsi = data_ref
 	PUSH_ARGS	
 	call r10	
 	POP_ARGS	
