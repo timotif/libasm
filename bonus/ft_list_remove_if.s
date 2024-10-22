@@ -35,9 +35,20 @@
 ;		cmp			->	rdx
 ;		free_fct	->	rcx
 
+%ifdef DARWIN
+%define FT_LIST_REMOVE_IF _ft_list_remove_if
+%define FREE _free
+%define CALL_FREE call free
+%else 
+%define FT_LIST_REMOVE_IF ft_list_remove_if
+%define FREE free
+%define CALL_FREE call [rel free wrt ..got]
+section .note.GNU-stack
+%endif
+
 section .text
-	global _ft_list_remove_if
-	extern _free
+	global FT_LIST_REMOVE_IF
+	extern FREE
 
 %macro SAFETY_CHECK 0
 	cmp rdi, 0
@@ -74,7 +85,7 @@ pop r9
 pop r8
 %endmacro
 
-_ft_list_remove_if:
+FT_LIST_REMOVE_IF:
 	SAFETY_CHECK
 							; r8 = cur
 							; r9 = prev
@@ -117,11 +128,7 @@ _ft_list_remove_if:
 		POP_ARGS	
 		PUSH_ARGS	
 		mov rdi, r8			; free(cur)
-		%ifndef DARWIN
-		call [rel free wrt ..got]
-		%else
-		call _free
-		%endif
+		CALL_FREE
 		POP_ARGS
 	.case_end:
 		mov rdx, [r12]
@@ -132,8 +139,3 @@ _ft_list_remove_if:
 .return:
 	mov rdi, r12			; put back **begin_list
 	ret
-
-
-%ifndef DARWIN
-section .note.GNU-stackn
-%endif

@@ -14,10 +14,17 @@
 ;	s1	-> rdi
 ;	s2	-> rsi
 
-section .text
-	global _ft_strcmp
+%ifdef DARWIN
+%define FT_STRCMP _ft_strcmp
+%else
+%define FT_STRCMP ft_strcmp
+section .note.GNU-stack
+%endif
 
-_ft_strcmp:
+section .text
+	global FT_STRCMP
+
+FT_STRCMP:
 	; s1: rdi -  s2: rsi
 	xor rbx, rbx ; init counter
 
@@ -39,7 +46,3 @@ _end:
 _return:
 	movsx rax, cl ; sign-extend cl to rax
 	ret
-
-%ifndef DARWIN
-section .note.GNU-stack
-%endif

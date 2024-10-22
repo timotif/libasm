@@ -22,10 +22,17 @@
 ; int	ft_list_size(t_list *begin_list)
 ;	begin_list	-> rdi
 
-section .text
-	global _ft_list_size
+%ifdef DARWIN
+%define FT_LIST_SIZE _ft_list_size
+%else 
+%define FT_LIST_SIZE ft_list_size
+section .note.GNU-stack
+%endif
 
-_ft_list_size:
+section .text
+	global FT_LIST_SIZE
+
+FT_LIST_SIZE:
 	xor rax, rax		; rax = 0
 .loop:
 	cmp rdi, 0			; if !begin_list; return
@@ -35,7 +42,3 @@ _ft_list_size:
 	jmp .loop
 .return:
 	ret
-
-%ifndef DARWIN
-section .note.GNU-stackn
-%endif

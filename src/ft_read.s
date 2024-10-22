@@ -16,20 +16,25 @@
 ;	count			-> rdx
 ;	syscall read	-> 0
 
-section .text
-	global _ft_read
-	%ifndef DARWIN
-	extern __errno_location
-	%else
-	extern ___error
-	%endif
+%ifdef DARWIN
+%define FT_READ _ft_read
+%define SYSCALL_READ 0x2000003
+%define ERRNO_LOCATION ___error
+%define CALL_ERRNO call ERRNO_LOCATION
+%else
+%define FT_READ ft_read
+%define SYSCALL_READ 0
+%define ERRNO_LOCATION __errno_location
+%define CALL_ERRNO call [rel ERRNO_LOCATION wrt ..got]
+section .note.GNU-stack
+%endif
 
-_ft_read:
-	%ifndef DARWIN
-	mov rax, 0
-	%else
-	mov rax, 0x2000003
-	%endif
+section .text
+	global FT_READ
+	extern ERRNO_LOCATION
+
+FT_READ:
+	mov rax, SYSCALL_READ
 	syscall
 	; test rax, rax
 	jc _errno
@@ -38,16 +43,8 @@ _errno:
 	mov rdi, rax
 	%ifndef DARWIN
 	neg rdi
-	call [rel __errno_location wrt ..got]	; call the function __errno_location in relative position
-											; with respect to (wrt) the Global Offset Table (got)
-											; this guarantees PIE compliance (Position Independent Executable)
-	%else
-	call ___error
 	%endif
+	CALL_ERRNO
 	mov [rax], rdi
 	mov rax, -1
 	ret
-
-%ifndef DARWIN
-section .note.GNU-stack
-%endif

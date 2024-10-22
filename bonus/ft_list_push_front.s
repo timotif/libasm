@@ -23,11 +23,22 @@
 ;	**begin_lst	->	rdi
 ;	*data		->	rsi
 
-section .text
-	global _ft_list_push_front
-	extern _malloc
+%ifdef DARWIN
+%define FT_LIST_PUSH_FRONT _ft_list_push_front
+%define MALLOC _malloc
+%define CALL_MALLOC call _malloc
+%else
+%define FT_LIST_PUSH_FRONT ft_list_push_front
+%define MALLOC malloc
+%define CALL_MALLOC call [rel malloc wrt ..got]	; call compliant with PIE
+section .note.GNU-stack
+%endif
 
-_ft_list_push_front:
+section .text
+	global FT_LIST_PUSH_FRONT
+	extern MALLOC
+
+FT_LIST_PUSH_FRONT:
 	; safety check (I accept NULL as data)
 	cmp rdi, 0
 	je .return_err
@@ -36,11 +47,7 @@ _ft_list_push_front:
 	push rsi			
 	; prepare arg for malloc 
 	mov rdi, 16
-	%ifndef DARWIN
-	call [rel malloc wrt ..got]	; call compliant with PIE
-	%else
-	call _malloc
-	%endif
+	CALL_MALLOC
 	cmp rax, 0					; if malloc returns NULL
 	je .return_err				; return error
 	; rax = new_node		
@@ -55,7 +62,3 @@ _ft_list_push_front:
 .return_err:
 	mov rax, 0
 	ret
-
-%ifndef DARWIN
-section .note.GNU-stackn
-%endif

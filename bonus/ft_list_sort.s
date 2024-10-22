@@ -23,8 +23,15 @@
 ;	begin_list	-> rdi
 ;	cmp			-> rsi
 
+%ifdef DARWIN
+%define FT_LIST_SORT _ft_list_sort
+%else 
+%define FT_LIST_SORT ft_list_sort
+section .note.GNU-stack
+%endif
+
 section .text
-	global _ft_list_sort
+	global FT_LIST_SORT
 
 %macro SAFETY_CHECK 0
 	cmp rdi, 0
@@ -50,7 +57,7 @@ section .text
 %endmacro
 
 section .text
-_ft_list_sort:
+FT_LIST_SORT:
 	SAFETY_CHECK
 	xor r9, r9			; r9: sorted flag
 	mov r10, rsi		; r10 = (*cmp)()

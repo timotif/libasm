@@ -26,12 +26,21 @@
 ;	*base		->	rsi
 ;	return val	->	rax
 
+%ifdef DARWIN
+%define FT_ATOI_BASE _ft_atoi_base
+%define FT_STRLEN _ft_strlen
+%else
+%define FT_ATOI_BASE ft_atoi_base
+%define FT_STRLEN ft_strlen
+section .note.GNU-stack
+%endif
+
 section .bss
 	bitmap resb 32 ; 256-bit bitmap (32 bytes)
 
 section .text
-	global _ft_atoi_base
-	extern _ft_strlen
+	global FT_ATOI_BASE
+	extern FT_STRLEN
 
 %macro invalid_base 1
 cmp byte %1, ' '
@@ -52,7 +61,7 @@ cmp byte %1, '-'
 je .base_invalid
 %endmacro
 
-_ft_atoi_base:
+FT_ATOI_BASE:
 	; Safety check
 	cmp rdi, 0					; if !str
 	je error
@@ -63,7 +72,7 @@ _ft_atoi_base:
 	mov r11, rsi				; r11: base
 	; ft_strlen
 	mov rdi, rsi				; set arg for ft_strlen
-	call _ft_strlen				; rax: base_len
+	call FT_STRLEN				; rax: base_len
 	mov r12, rax				; r12: base_len
 	; Base validation
 	cmp rax, 2					; if base_len < 2
@@ -191,7 +200,3 @@ is_plus:
 is_minus:
 	mov rax, 1
 	ret
-
-%ifndef DARWIN
-section .note.GNU-stackn
-%endif

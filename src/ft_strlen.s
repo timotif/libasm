@@ -12,11 +12,18 @@
 ; size_t strlen(const char *s)
 ; 	s	-> rdi
 
+%ifdef DARWIN
+%define FT_STRLEN _ft_strlen
+%else
+%define FT_STRLEN ft_strlen
+section .note.GNU-stack
+%endif
+
 section .text
-	global _ft_strlen
+	global FT_STRLEN
 
 ; First approach
-_ft_strlen:
+FT_STRLEN:
 	xor rax, rax ; init counter
 
 _loop:
@@ -39,7 +46,3 @@ _return:
 ;     dec rcx             ; Adjust length to exclude the null terminator
 ;     mov rax, rcx        ; Move the length to rax (return value)
 ;     ret
-
-%ifndef DARWIN
-section .note.GNU-stack
-%endif
