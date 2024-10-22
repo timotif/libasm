@@ -38,11 +38,11 @@
 %ifdef DARWIN
 %define FT_LIST_REMOVE_IF _ft_list_remove_if
 %define FREE _free
-%define CALL_FREE call free
+%define CALL_FREE call FREE
 %else 
 %define FT_LIST_REMOVE_IF ft_list_remove_if
 %define FREE free
-%define CALL_FREE call [rel free wrt ..got]
+%define CALL_FREE call [rel FREE wrt ..got]
 section .note.GNU-stack
 %endif
 

@@ -17,7 +17,7 @@
 ;	syscall write	-> 1 (Linux) 0x2000004 (Darwin)
 
 %ifdef DARWIN
-%define FT_WRITE ft_write
+%define FT_WRITE _ft_write
 %define SYSCALL_WRITE 0x2000004
 %define ERRNO_LOCATION ___error
 %define CALL_ERRNO call ERRNO_LOCATION
