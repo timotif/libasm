@@ -2,7 +2,7 @@
 *Everything is open source when you speak assembly*
 
 ## Overview
-Welcome to the **Libasm** project! This project is designed to help you get familiar with assembly language by implementing various functions in x86-64 assembly. The project includes a mix of C and assembly code to demonstrate the power and efficiency of low-level programming.
+Welcome to the **Libasm** project! This project is designed to help you get familiar with assembly language by implementing various functions in x86_64 assembly. The project includes a mix of C and assembly code to demonstrate the power and efficiency of low-level programming.
 ### Common instructions
 • You must write 64 bits ASM. Beware of the "calling convention".
 • You can’t do inline ASM, you must do ’.s’ files.
@@ -35,6 +35,7 @@ Welcome to the **Libasm** project! This project is designed to help you get fami
 
 ## Getting Started
 The project is tested on Ubuntu Linux 24.04 LTS.
+In the `mac_silicon` branch you can find a version working on Mac Silicon with Rosetta.
 ### Prerequisites
 - **nasm**: The Netwide Assembler, used to assemble the assembly code.
 - **GCC**: The GNU Compiler Collection, used to compile the C code.
