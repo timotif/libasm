@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:42:45 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/13 11:02:08 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/21 22:25:41 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void test_failure(int *test_number, int fd, const void *buf, size_t count)
 	if (ret_std < 0 || ret_ft < 0)
 	{
 		printf("Std: ret: %zd, error: %s\n", ret_std, strerror(err_std));
-		printf("Std: ret: %zd, error: %s\n", ret_ft, strerror(err_ft));
+		printf("Ft: ret: %zd, error: %s\n", ret_ft, strerror(err_ft));
 	}
 	#endif
 	ret = (ret_std == ret_ft) && (err_std == err_ft);
