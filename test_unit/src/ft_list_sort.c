@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:40:47 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/14 01:12:39 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/23 09:35:58 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ void	ft_list_sort_c(t_list **begin_list, int (*cmp)()) {
 		sorted = 1;
 		cur = *begin_list;
 		while (cur->next) {
-			int ret_cmp = cmp(cur->data, cur->next->data);
+			int ret_cmp;
+			if (!cur->data || !cur->next->data)
+				ret_cmp = 0;
+			else
+				ret_cmp = cmp(cur->data, cur->next->data);
 			if (ret_cmp > 0) {
 				tmp = cur->data;
 				cur->data = cur->next->data;
