@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:32:27 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/17 15:23:54 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/23 09:42:23 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ void test_list() {
 	ft_list_push_front_c(&list_c, "Zizi");
 	ft_list_push_front(&list_asm, "Zizi");
 	test(list_c, list_asm);
+	// TEST Push NULL element
+	ft_list_push_front_c(&list_c, NULL);
+	ft_list_push_front(&list_asm, NULL);
+	test(list_c, list_asm);
 	// TEST Sorting the list
 	ft_list_sort_c(&list_c, memcmp);
 	ft_list_sort(&list_asm, memcmp);
@@ -81,6 +85,13 @@ void test_list() {
 	test(list_c, list_asm);
 	ft_list_delete(&list_c, 0);
 	ft_list_delete(&list_asm, 0);
+	// TEST Sorting a list with 1 element
+	list_c = ft_create_elem("Hello");
+	list_asm = ft_create_elem("Hello");
+	ft_list_sort_c(&list_c, strcmp);
+	ft_list_sort(&list_asm, strcmp);
+	test(list_c, list_asm);
+	ft_list_delete(&list_c, 0);
 	// TEST Create randomized list
 	list_c = create_list(10);
 	list_asm = ft_list_dup(list_c);
@@ -112,6 +123,22 @@ void test_list() {
 	// TEST Removing the last element
 	ft_list_remove_if_c(&list_c, "2", strcmp, free);
 	ft_list_remove_if(&list_asm, "2", strcmp, free);
+	test(list_c, list_asm);
+	// TEST Removing an element that doesn't exist
+	ft_list_remove_if_c(&list_c, "2", strcmp, free);
+	ft_list_remove_if(&list_asm, "2", strcmp, free);
+	test(list_c, list_asm);
+	// TEST Removing empty element
+	ft_list_remove_if_c(&list_c, "", strcmp, free);
+	ft_list_remove_if(&list_asm, "", strcmp, free);
+	test(list_c, list_asm);
+	// TEST Removing NULL element
+	ft_list_remove_if_c(&list_c, NULL, ft_strcmp, free);
+	ft_list_remove_if(&list_asm, NULL, ft_strcmp, free);
+	test(list_c, list_asm);
+	// TEST Removing from NULL list
+	ft_list_remove_if_c(NULL, "2", strcmp, free);
+	ft_list_remove_if(NULL, "2", strcmp, free);
 	test(list_c, list_asm);
 	// Extra tests
 	// Clean up

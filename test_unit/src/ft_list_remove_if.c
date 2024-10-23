@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 09:27:51 by tfregni           #+#    #+#             */
-/*   Updated: 2024/10/18 17:09:02 by tfregni          ###   ########.fr       */
+/*   Updated: 2024/10/23 09:57:30 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ft_list_remove_if_c(t_list **begin_list, void *data_ref, \
 	t_list *cur;
 	t_list *prev;
 
+	if (!begin_list || !*begin_list || !cmp || !free_fct)
+		return ;
 	cur = *begin_list;
 	prev = cur;
 	while (cur)
