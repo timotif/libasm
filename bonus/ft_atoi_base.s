@@ -122,8 +122,8 @@ error:
 	mov rax, 0
 	ret
 check_negative:
-	test r8, r8					; if r8
-	jp return					; is even -> return
+	test r8b, 0x1				; if r8
+	jz return					; is even -> return
 	neg rax						; return_val = -return_val
 	ret
 return:
