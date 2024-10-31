@@ -113,14 +113,14 @@ error:
 	mov rax, 0
 	ret
 check_negative:
-	test r8, r8					; if r8
-	jp return					; is even -> return
+	test r8b, 0x1				; if r8 is even (r8b & 0x1)
+	jz return					; return
 	neg rax						; return_val = -return_val
 	ret
 return:
 	ret
 
-; int validate_base(char *base)
+; int validate_base(char *base
 ; 	rdi		-> base
 ; 	returns ->	0 if no duplicates
 ;				1 if duplicates
